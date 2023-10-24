@@ -16,6 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: npm install --legacy-peer-deps
+      - run: npx update-browserslist-db@latest
       - run: npm run build
     # - run: npm test
       - uses: jakejarvis/s3-sync-action@master
