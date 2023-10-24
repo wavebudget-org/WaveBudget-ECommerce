@@ -1,0 +1,53 @@
+.hs {
+
+    display:block;
+    @media screen and (max-width:640px) {
+        display:none;
+    }
+    
+  }
+  .wrapper {
+    width:100%;
+    background:rgba(0,0,0,0.6);
+    inset:0;
+    z-index: 30;
+   
+  }
+  .nowrapper {
+    width: fit-content;
+    background:#009999;
+    top:0;
+    bottom:0;
+    left:0;
+
+  }
+  .menu {
+    @media screen  and (min-width:1000px){
+        display:none;
+    }
+   
+  }
+  .menuhide {
+    display:none;
+    @media screen and (max-width:640px) {
+       
+    }
+ 
+  }
+  .dashshow {
+    width:100%;
+    padding-top:14%;
+    display:none;
+    @media screen and (min-width:1000px) {
+        display: block;
+    }
+   
+  }
+  
+  .dashhideshow {
+    width:fit-content;
+    padding-top: 7%;
+    display: block;
+    background: #009999;
+   
+  }

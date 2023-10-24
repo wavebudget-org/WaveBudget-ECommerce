@@ -1,0 +1,5 @@
+.grid_desk {
+    @media screen and (min-width:450px) {
+        grid-template-columns: repeat(2, auto);
+    }
+}

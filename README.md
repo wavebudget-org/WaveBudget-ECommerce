@@ -1,1 +1,1 @@
-# WaveBudget-ECommerce
+# WAVE BUDGET
