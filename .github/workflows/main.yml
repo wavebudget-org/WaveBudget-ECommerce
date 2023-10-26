@@ -15,9 +15,9 @@ jobs:
     
     steps:
       - uses: actions/checkout@v1
-      - run: rm package-lock.json
-      - run: npm install --legacy-peer-deps
-      - run: npm run build
+      # - run: rm package-lock.json
+      - run: yarn install --legacy-peer-deps
+      - run: yarn run build
     # - run: npm test
       - uses: jakejarvis/s3-sync-action@master
         with:
