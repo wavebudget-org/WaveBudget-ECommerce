@@ -133,12 +133,13 @@ const ProductDetail = () => {
     toast.success("Item added to cart successfully");
   };
 
-  const handlePay = async () => {
+  const handlePay =  () => {
     if (!currentUser) {
       toast.error("You must be logged in to buy");
       return;
     }
-    await HandlePayment(email, parseFloat(curPrice), dispatch);
+    // await HandlePayment(email, parseFloat(curPrice), dispatch);
+    navigate(`/product/payment-gateway/${id}`)
   };
 
   /**

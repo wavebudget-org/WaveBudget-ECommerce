@@ -19,6 +19,8 @@ import UserDetail from "components/admin/userdetails/userDetail";
 import MerchantDetail from "components/admin/merchantdetail/merchantDetail";
 import AdminMerchant from "components/admin/adminmerchant/adminMerchant";
 import UserHistory from "components/User/userHistory";
+import PaymentGateway from "components/payment-gateway/Payment"
+import InitiatePay from "components/payment-gateway/Initiate-Pay"
 export {
     HomePage,
     SignIn,
@@ -40,7 +42,9 @@ export {
     UserDetail,
     MerchantDetail,
     AdminMerchant,
-    UserHistory
+    UserHistory,
+    PaymentGateway,
+    InitiatePay
 
 }
 

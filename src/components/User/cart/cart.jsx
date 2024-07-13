@@ -50,7 +50,8 @@ const UserCart = () => {
       toast.error("You must be logged in to buy");
       return;
     }
-    HandlePayment(email, parseFloat(overallPrice), dispatch);
+    // HandlePayment(email, parseFloat(overallPrice), dispatch);
+    navigate("/cart/initiate-payment")
   };
 
   useEffect(() => {

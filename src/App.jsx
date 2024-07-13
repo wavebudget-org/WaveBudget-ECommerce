@@ -23,6 +23,8 @@ import {
   AdminMerchant,
   MerchantDetail,
   UserHistory,
+  PaymentGateway,
+  InitiatePay
 
 } from "Pages";
 
@@ -63,6 +65,8 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<UserCart />} />
+          <Route path="/product/payment-gateway/:id" element={<PaymentGateway />} />
+          <Route path="/cart/initiate-payment/" element={<InitiatePay />} />
           <Route path="/detail" element={<DetailPage />} />
           <Route path="/seller/activate-account" element={<ActivationCard />} />
           <Route path="/seller/not-activated" element={<AwaitActivation />} />
