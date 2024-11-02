@@ -1,36 +1,23 @@
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
-import {
-  collection,
-  query,
-  where,
-  addDoc,
-  getDocs,
-  setDoc,
-  getDoc,
-  doc,
-  getFirestore,
-  deleteDoc,
-} from "firebase/firestore";
-import { auth, db, storage } from "./firebase";
-
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { db, storage } from "./firebase";
 
 export const sendToStore = async (data) => {
-    const { image } = data;
-    const { first, second, third, forth } = image;
- console.log('this is the image data', image)
+  const { image } = data;
+  const { first, second, third, forth } = image;
+  console.log("this is the image data", image);
   //console.log('this is',data.editted)
   let success;
   const result = {};
 
-  if(data) {
-    console.log(data)
-    
+  if (data) {
+    console.log(data);
   }
 
-if (first.isEdit) {
+  if (first.isEdit) {
     const imgRef = ref(storage, `images/${first.img + v4()}`);
-  
+
     await uploadBytes(imgRef, first.img)
       .then((res) => {
         console.log(res);
@@ -38,23 +25,20 @@ if (first.isEdit) {
       .catch((err) => {
         console.log(err);
       });
-  
+
     await getDownloadURL(imgRef)
       .then((res) => {
         console.log(res);
-        result['first'] = res
+        result["first"] = res;
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  
+  if (second.isEdit) {
+    const imgRefS = ref(storage, `images/${second.img + v4()}`);
 
-
-   if (second.isEdit)
-   { const imgRefS = ref(storage, `images/${second.img + v4()}`);
-  
     await uploadBytes(imgRefS, second.img)
       .then((res) => {
         console.log(res);
@@ -62,18 +46,20 @@ if (first.isEdit) {
       .catch((err) => {
         console.log(err);
       });
-  
+
     await getDownloadURL(imgRefS)
       .then((res) => {
         console.log(res);
-        result['second'] = res
+        result["second"] = res;
       })
       .catch((err) => {
         console.log(err);
-      });}
-  
-if (third.isEdit) {    const imgRefT = ref(storage, `images/${third.img + v4()}`);
-  
+      });
+  }
+
+  if (third.isEdit) {
+    const imgRefT = ref(storage, `images/${third.img + v4()}`);
+
     await uploadBytes(imgRefT, third.img)
       .then((res) => {
         console.log(res);
@@ -81,18 +67,20 @@ if (third.isEdit) {    const imgRefT = ref(storage, `images/${third.img + v4()}`
       .catch((err) => {
         console.log(err);
       });
-  
+
     await getDownloadURL(imgRefT)
       .then((res) => {
         console.log(res);
-        result['third'] = res
+        result["third"] = res;
       })
       .catch((err) => {
         console.log(err);
-      });}
-   
-   if (forth.isEdit){ const imgRefF = ref(storage, `images/${forth.img + v4()}`);
-  
+      });
+  }
+
+  if (forth.isEdit) {
+    const imgRefF = ref(storage, `images/${forth.img + v4()}`);
+
     await uploadBytes(imgRefF, forth.img)
       .then((res) => {
         console.log(res);
@@ -100,31 +88,31 @@ if (third.isEdit) {    const imgRefT = ref(storage, `images/${third.img + v4()}`
       .catch((err) => {
         console.log(err);
       });
-  
+
     await getDownloadURL(imgRefF)
       .then((res) => {
         console.log(res);
-        result['forth'] = res;
+        result["forth"] = res;
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  
-      console.log(result);
+
+  console.log(result);
 
   if (data.id) {
-    console.log("from data id", data.id)
+    console.log("from data id", data.id);
     const docRef = doc(db, "productDetails", data.id);
     const myImages = Object.values({
-        first: first.isEdit ? result.first : first.img,
-        second: second.isEdit ? result.second : second.img,
-        third: third.isEdit ? result.third : third.img,
-        forth: forth.isEdit ? result.forth : forth.img,
-      })
+      first: first.isEdit ? result.first : first.img,
+      second: second.isEdit ? result.second : second.img,
+      third: third.isEdit ? result.third : third.img,
+      forth: forth.isEdit ? result.forth : forth.img,
+    });
 
-      const filterImage = Object.values(myImages).filter((val) => val !== undefined)
-     const payload = {
+    const filterImage = Object.values(myImages).filter((val) => val !== undefined);
+    const payload = {
       name: data.name,
       description: data.description,
       category: data.category,
@@ -137,9 +125,8 @@ if (third.isEdit) {    const imgRefT = ref(storage, `images/${third.img + v4()}`
     };
 
     if (myImages) {
-      console.log(myImages)
-      console.log(payload)
-    
+      console.log(myImages);
+      console.log(payload);
     }
 
     setDoc(docRef, payload, { merge: true })
@@ -153,13 +140,12 @@ if (third.isEdit) {    const imgRefT = ref(storage, `images/${third.img + v4()}`
 
     return success;
   } else {
-   
-   // const imgArray = [first, second, third, forth];
-   
+    // const imgArray = [first, second, third, forth];
+
     const productRef = collection(db, "productDetails");
     //let result;
-    
-    const myImages = Object.values(result).filter((val) => val !== undefined)
+
+    const myImages = Object.values(result).filter((val) => val !== undefined);
 
     await addDoc(productRef, {
       name: data.name,
@@ -182,5 +168,4 @@ if (third.isEdit) {    const imgRefT = ref(storage, `images/${third.img + v4()}`
 
     return success;
   }
-
-}
+};

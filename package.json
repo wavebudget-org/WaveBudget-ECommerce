@@ -18,6 +18,7 @@
     "react-animation": "^1.2.2",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.53.1",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.8.0",
     "react-redux": "^7.2.9",

@@ -2,7 +2,6 @@
 import * as type from "./Types";
 import axios from "../../Utils/useAxios";
 import toast from "react-hot-toast";
-import { generateRandomID } from "Utils/helpers";
 
 const GetUsersSuccess = (data) => {
   return {
@@ -22,8 +21,8 @@ const getPaymentstatus = (data) => {
   return {
     type: type.PAYMENT_STATUS,
     payload: data,
-  }
-}
+  };
+};
 const logout = () => {
   return {
     type: type.LOGOUT,
@@ -55,7 +54,7 @@ const editItem = (data) => {
     type: type.EDIT_ITEM,
     payload: data,
   };
-}
+};
 const updateTotal = (data) => {
   return {
     type: type.UPDATE_TOTAL_PRICE,
@@ -80,26 +79,25 @@ const updateSingleItem = (data) => {
     type: type.UPDATE_SINGLE_ITEM,
     payload: data,
   };
-} 
-
-
-const getPreviousOrders = () => {
-  return {
-    type: type.GET_PREVIOUS_ORDERS,
-  };
 };
+
+// const getPreviousOrders = () => {
+//   return {
+//     type: type.GET_PREVIOUS_ORDERS,
+//   };
+// };
 const itemsToCart = (payload, cartItems) => {
   return (dispatch) => {
-    cartItems.push(payload)
-    dispatch(updatedCart(cartItems))
-  }
+    cartItems.push(payload);
+    dispatch(updatedCart(cartItems));
+  };
 };
 const updatedCart = (payload) => {
   return {
     type: type.ADD_ITEMS_TO_CART,
     payload,
   };
-}
+};
 
 const resetCart = () => {
   // return (dispatch) => {
@@ -113,16 +111,15 @@ const resetCart = () => {
 
 const calculateTotal = (cartItems) => {
   return (dispatch) => {
-    let total = cartItems.map((value) => value.curPrice)
-    let  nums = total.reduce((acc, item) => acc + parseFloat(item || 0),0)
- 
-    dispatch(updateTotal(nums))
-    let numItems = cartItems.map((value) => value.count)
-    let totalCount = numItems.reduce((acc, item) => acc + item,0)
-    dispatch(getNums(totalCount))
-  }
- 
-}
+    let total = cartItems.map((value) => value.curPrice);
+    let nums = total.reduce((acc, item) => acc + parseFloat(item || 0), 0);
+
+    dispatch(updateTotal(nums));
+    let numItems = cartItems.map((value) => value.count);
+    let totalCount = numItems.reduce((acc, item) => acc + item, 0);
+    dispatch(getNums(totalCount));
+  };
+};
 
 /**
  * 
@@ -154,22 +151,21 @@ const addFoodItemsToCart = (data) => {
 };
  */
 
-
 const increaseSingleCartItems = (id, cartItems) => {
   return (dispatch) => {
-    let item = cartItems[id]
-    item.count +=1
-    item.curPrice = item.curPrice + item.price
-    cartItems[id].count = item.count
-    cartItems[id].curPrice = item.curPrice
-    dispatch(updatedCart(cartItems))
-    let total = cartItems.map((value) => value.curPrice)
-    let  nums = total.reduce((acc, item) => acc + parseFloat(item || 0),0)
- 
-    dispatch(updateTotal(nums))
-    let numItems = cartItems.map((value) => value.count)
-    let totalCount = numItems.reduce((acc, item) => acc + item,0)
-    dispatch(getNums(totalCount))
+    let item = cartItems[id];
+    item.count += 1;
+    item.curPrice = item.curPrice + item.price;
+    cartItems[id].count = item.count;
+    cartItems[id].curPrice = item.curPrice;
+    dispatch(updatedCart(cartItems));
+    let total = cartItems.map((value) => value.curPrice);
+    let nums = total.reduce((acc, item) => acc + parseFloat(item || 0), 0);
+
+    dispatch(updateTotal(nums));
+    let numItems = cartItems.map((value) => value.count);
+    let totalCount = numItems.reduce((acc, item) => acc + item, 0);
+    dispatch(getNums(totalCount));
     //let itemc = cartItems.find((val) => val.id === id)
     /**
      * 
@@ -188,23 +184,23 @@ const increaseSingleCartItems = (id, cartItems) => {
 
 const decreaseSingleCartItems = (id, cartItems) => {
   return (dispatch) => {
-    let item = cartItems[id]
+    let item = cartItems[id];
     if (item.count > 1) {
-      item.count -=1
-      item.curPrice = item.curPrice - item.price
-      cartItems[id].count = item.count
-      cartItems[id].curPrice = item.curPrice
-      dispatch(updatedCart(cartItems))
-      let total = cartItems.map((value) => value.curPrice)
-      let  nums = total.reduce((acc, item) => acc + parseFloat(item || 0),0)
-   
-      dispatch(updateTotal(nums))
-      let numItems = cartItems.map((value) => value.count)
-      let totalCount = numItems.reduce((acc, item) => acc + item,0)
-      dispatch(getNums(totalCount))
+      item.count -= 1;
+      item.curPrice = item.curPrice - item.price;
+      cartItems[id].count = item.count;
+      cartItems[id].curPrice = item.curPrice;
+      dispatch(updatedCart(cartItems));
+      let total = cartItems.map((value) => value.curPrice);
+      let nums = total.reduce((acc, item) => acc + parseFloat(item || 0), 0);
+
+      dispatch(updateTotal(nums));
+      let numItems = cartItems.map((value) => value.count);
+      let totalCount = numItems.reduce((acc, item) => acc + item, 0);
+      dispatch(getNums(totalCount));
     }
-   
-   /**
+
+    /**
     * 
    const getCart = getState().cart.cartItems;
     const getItem = getCart.find((item) => item.id === id);
@@ -223,16 +219,16 @@ const decreaseSingleCartItems = (id, cartItems) => {
 const removeFromCart = (id, cartItems) => {
   return (dispatch) => {
     //let item = cartItems[id];
-     //let itemc = cartItems.find((val) => val.id === id)
-     cartItems.splice(id, 1);
-     dispatch(updatedCart(cartItems))
-      let total = cartItems.map((value) => value.curPrice)
-      let  nums = total.reduce((acc, item) => acc + parseFloat(item || 0),0)
-   
-      dispatch(updateTotal(nums))
-      let numItems = cartItems.map((value) => value.count)
-      let totalCount = numItems.reduce((acc, item) => acc + item,0)
-      dispatch(getNums(totalCount))
+    //let itemc = cartItems.find((val) => val.id === id)
+    cartItems.splice(id, 1);
+    dispatch(updatedCart(cartItems));
+    let total = cartItems.map((value) => value.curPrice);
+    let nums = total.reduce((acc, item) => acc + parseFloat(item || 0), 0);
+
+    dispatch(updateTotal(nums));
+    let numItems = cartItems.map((value) => value.count);
+    let totalCount = numItems.reduce((acc, item) => acc + item, 0);
+    dispatch(getNums(totalCount));
     toast.success("Item removed successfully");
     //dispatch(calculateTotalPrice());
     /**
@@ -259,9 +255,9 @@ const showCartCount = () => {
 const updateCategory = (data) => {
   return {
     type: type.GET_CATEGORY,
-    payload:data
-  }
-}
+    payload: data,
+  };
+};
 const getUserPreviousOrderInfo = (data) => {
   return {
     type: type.GET_USER_PREVIOUS_ORDER_INFO,
@@ -370,5 +366,5 @@ export {
   updateCategory,
   editItem,
   updateSingleItem,
-  getPaymentstatus
+  getPaymentstatus,
 };

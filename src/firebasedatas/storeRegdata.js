@@ -1,25 +1,13 @@
-import { auth, db, storage } from "./firebase";
+import { db, storage } from "./firebase";
 import { v4 } from "uuid";
-import {
-  collection,
-  query,
-  where,
-  addDoc,
-  getDocs,
-  setDoc,
-  getDoc,
-  doc,
-  getFirestore,
-  deleteDoc,
-} from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export const saveData = async (id, payload) => {
   const userRef = doc(db, "userinformation", id);
-  
-  if(payload) {
-    console.log(id, payload)
-    
+
+  if (payload) {
+    console.log(id, payload);
   }
 
   if (payload.cacImage) {
@@ -46,7 +34,7 @@ export const saveData = async (id, payload) => {
     return setDoc(userRef, {
       email: payload.email,
       userId: id,
-      phoneNumber:payload.phoneNumber,
+      phoneNumber: payload.phoneNumber,
       acctname: payload.acctname,
       acctnumber: payload.acctnumber,
       bankname: payload.bankname,

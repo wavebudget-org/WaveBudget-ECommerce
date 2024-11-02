@@ -7,9 +7,9 @@ export const RequireAuth = ({ children }) => {
   const { token } = useSelector((state) => state.user);
   const location = useLocation();
   if (token) {
-    return <div> {children} </div>;
+    return <> {children} </>;
   } else {
-    toast.error('Access Denied, login required')
-    return <Navigate to="/" state={{path:  location.pathname}} />;
+    toast.error("Access Denied, login required");
+    return <Navigate to="/" state={{ path: location.pathname }} />;
   }
 };
