@@ -50,7 +50,7 @@ const MerchantSignUp = () => {
       acctnumber: e.accountNumber,
       bankname: e.bankName,
       businessType: e.businessType,
-      cacImage: cac || "https://imagetolink.com/ib/cx6NeI8ZwH.png",
+      cacImage: cac,
       businessDescription: e.businessDescription,
       type: "Merchant",
     };
@@ -77,6 +77,7 @@ const MerchantSignUp = () => {
           })
           .catch((err) => {
             setLoading(false);
+            console.log(err);
             toast.error(err.code);
           });
       })
@@ -136,12 +137,14 @@ const MerchantSignUp = () => {
                   name="address"
                   {...register("address", { required: "Store Address is required" })}
                 />
+                {errors.address && <span className="font-small text-[#FF0000]">{errors.address.message}</span>}
               </div>
               <div className="form-group space-y-1 w-full">
                 <label className="block font-medium text-zinc-700" htmlFor="tel number">
                   Phone Number
                 </label>
                 <input className={styles.input} type="number" placeholder="Phone Number" name="tel number" {...register("phoneNumber", { required: "Phone Number is required" })} />
+                {errors.phoneNumber && <span className="font-small text-[#FF0000]">{errors.phoneNumber.message}</span>}
               </div>
               <div className="form-group space-y-1 w-full">
                 <label className="block font-medium text-zinc-700" htmlFor="email">
@@ -154,12 +157,14 @@ const MerchantSignUp = () => {
                   name="email"
                   {...register("email", { required: "Email Address is required" })}
                 />
+                {errors.email && <span className="font-small text-[#FF0000]">{errors.email.message}</span>}
               </div>
               <div className="form-group space-y-1 w-full">
                 <label className="block font-medium text-zinc-700" htmlFor="name">
                   Business Type
                 </label>
                 <input className={styles.input} type="text" placeholder="Business type" name="name" {...register("businessType", { required: "Business Type is required" })} />
+                {errors.businessType && <span className="font-small text-[#FF0000]">{errors.businessType.message}</span>}
               </div>
               <div className="form-group space-y-1 w-full">
                 <label className="block font-medium text-zinc-700" htmlFor="name">
@@ -181,18 +186,21 @@ const MerchantSignUp = () => {
                   Account Name
                 </label>
                 <input className={styles.input} type="text" placeholder="Account name" name="name" {...register("accountName", { required: "Account Name is required" })} />
+                {errors.accountName && <span className="font-small text-[#FF0000]">{errors.accountName.message}</span>}
               </div>
               <div className="form-group space-y-1 w-full">
                 <label className="block font-medium text-zinc-700" htmlFor="name">
                   Account Number
                 </label>
                 <input className={styles.input} type="text" placeholder="Account Number" name="name" {...register("accountNumber", { required: "Account Number is required" })} />
+                {errors.accountNumber && <span className="font-small text-[#FF0000]">{errors.accountNumber.message}</span>}
               </div>
               <div className="form-group space-y-1 w-full">
                 <label className="block font-medium text-zinc-700" htmlFor="name">
                   Bank Name
                 </label>
                 <input className={styles.input} type="text" placeholder="Bank name" name="name" {...register("bankName", { required: "Bank Name is required" })} />
+                {errors.bankName && <span className="font-small text-[#FF0000]">{errors.bankName.message}</span>}
               </div>
               <div className="form-group space-y-1 w-full">
                 <label className="block font-medium text-zinc-700" htmlFor="password">
@@ -214,6 +222,7 @@ const MerchantSignUp = () => {
                     <img src={viewpassword} alt="viewpassword" className="w-full h-full object-cover" />
                   </div>
                 </div>
+                {errors.password && <span className="font-small text-[#FF0000]">{errors.password.message}</span>}
               </div>
               <button type="submit" className="bg-[#009999]  text-white sm:py-3 mx-auto py-2 rounded-md flex items-center w-[50%] justify-center">
                 {loading ? <Loader /> : <span>Sign Up</span>}

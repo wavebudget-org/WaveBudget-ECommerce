@@ -5,24 +5,16 @@ import { HiArrowNarrowRight } from "react-icons/hi";
 import back from "../../../../assets/Svg/back.svg";
 import foward from "../../../../assets/Svg/foward.svg";
 //import LandingWidget from '../scrollWidget/scrollWidget';
-import { useSelector } from "react-redux";
 import ScrollWidget from "../scrollWidget/scrollWidget";
 
 const GroupWidget = ({ heading, payload }) => {
-  const { items } = useSelector((state) => state.items);
   const navigate = useNavigate();
   const slide = useRef();
 
   const [isnext, setisnext] = useState(true);
   const [isprev, setisprev] = useState(false);
-  const [data, setData] = useState(payload);
-
-  console.log(items);
 
   function prev() {
-    console.log(slide.current.scrollLeft);
-    console.log(slide.current.scrollWidth);
-    console.log(slide.current.offsetWidth);
     slide.current.scrollBy({
       left: -slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -47,10 +39,7 @@ const GroupWidget = ({ heading, payload }) => {
         setisprev(true);
       }
 
-      if (
-        slide.current?.scrollLeft + slide.current?.offsetWidth >=
-        slide.current?.scrollWidth
-      ) {
+      if (slide.current?.scrollLeft + slide.current?.offsetWidth >= slide.current?.scrollWidth) {
         setisnext(false);
       } else {
         setisnext(true);
@@ -59,7 +48,8 @@ const GroupWidget = ({ heading, payload }) => {
 
     slide.current?.addEventListener("scroll", scrollEl);
 
-    return () => slide.current?.removeEventListener("scroll", scrollEl);
+    let variable = slide.current;
+    return () => variable?.removeEventListener("scroll", scrollEl);
   }, [slide.current?.scrollLeft]);
 
   return (
@@ -71,13 +61,11 @@ const GroupWidget = ({ heading, payload }) => {
             navigate("/detail", {
               state: {
                 navtitle: heading,
-                data: payload
-                
+                data: payload,
               },
             });
           }}
-          className="groupWidget_more"
-        >
+          className="groupWidget_more">
           <HiArrowNarrowRight className="groupWidget_more_icon" />
         </div>
       </div>
@@ -89,31 +77,19 @@ const GroupWidget = ({ heading, payload }) => {
           <img src={foward} alt="foward" />
         </div>
         <div ref={slide} className="overflow_auto_wrapper">
-          {payload?.slice(0,10).map(
-            (
-              { name, description, storeName, id,images, price, qty },
-              idx
-            ) => {
-              console.log(name);
-              return (
-                <div
-                  className="groupWidget_album_item"
-                  onClick={() => {
-                    navigate(`/product/${id}`)
-                  }}
-                  key={idx + 1}
-                >
-                  <ScrollWidget
-                    name={name.stringValue}
-                    image={images[0]}
-                    id={id}
-                    descriptions={description.stringValue}
-                    price={price.stringValue}
-                  />
-                </div>
-              );
-            }
-          )}
+          {payload?.slice(0, 10).map(({ name, description, id, images, price }, idx) => {
+            console.log(name);
+            return (
+              <div
+                className="groupWidget_album_item"
+                onClick={() => {
+                  navigate(`/product/${id}`);
+                }}
+                key={idx + 1}>
+                <ScrollWidget name={name.stringValue} image={images[0]} id={id} descriptions={description.stringValue} price={price.stringValue} />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

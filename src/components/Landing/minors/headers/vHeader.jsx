@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "../../../../assets/images/waveb.png";
 import "../../../../index.css";
-import { MdNavigateBefore } from "react-icons/md";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import AuthCard from "../authcard/authcard";
 import CartCard from "../minicartcard/miniCard";
@@ -27,7 +26,6 @@ const VisHeader = () => {
     async function getUser() {
       await getExistingDoc(currentUser)
         .then((res) => {
-          console.log(res);
           setname(res.name);
         })
         .catch((err) => {
@@ -36,12 +34,10 @@ const VisHeader = () => {
     }
 
     getUser();
-  }, []);
+  }, [currentUser]);
 
   const handleMobileSignin = () => {
-  
-        navigate("/userinfo");
-   
+    navigate("/userinfo");
   };
 
   return (
@@ -50,8 +46,7 @@ const VisHeader = () => {
         onClick={() => {
           navigate("/");
         }}
-        className="flex space-x-2 items-center"
-      >
+        className="flex space-x-2 items-center">
         <div className="w-10 h-6">
           <img className="w-full h-full" src={logo} alt="" />
         </div>
@@ -97,25 +92,13 @@ const VisHeader = () => {
             setisVisisble(false);
             setisUser(false);
           }}
-          className="group relative flex text-black"
-        >
+          className="group relative flex text-black">
           <div className="flex group-hover:text-[#009999] text-[16px] items-center space-x-2">
-            {name ? (
-              <span className="capitalize  text-sm">
-                {name.split(" ")[0] || name}
-              </span>
-            ) : (
-              <span className="min-w-max text-sm">Sign in</span>
-            )}
+            {name ? <span className="capitalize  text-sm">{name.split(" ")[0] || name}</span> : <span className="min-w-max text-sm">Sign in</span>}
             <FaUser className=" " />
           </div>
 
-          <AuthCard
-            isVisible={isVisible}
-            isUser={isUser}
-            isMobile={isMobile}
-            setisMobile={setisMobile}
-          />
+          <AuthCard isVisible={isVisible} isUser={isUser} isMobile={isMobile} setisMobile={setisMobile} />
         </div>
         <div
           onClick={() => {
@@ -129,8 +112,7 @@ const VisHeader = () => {
           onMouseLeave={() => {
             setisCart(false);
           }}
-          className="relative"
-        >
+          className="relative">
           {numOfCartItems > 0 && (
             <div className=" hidden min-[450px]:flex absolute top-[-10px] right-[-10px] bg-[#009999] rounded-full px-2  text-[10px] text-white items-center justify-center">
               <span>{numOfCartItems}</span>
@@ -138,9 +120,7 @@ const VisHeader = () => {
           )}
           <FaShoppingCart className="hidden min-[450px]:block hover:text-[#009999]" />
 
-          {numOfCartItems === 0 && (
-            <CartCard name={name} items={numOfCartItems} isCart={isCart} />
-          )}
+          {numOfCartItems === 0 && <CartCard name={name} items={numOfCartItems} isCart={isCart} />}
         </div>
       </div>
     </div>

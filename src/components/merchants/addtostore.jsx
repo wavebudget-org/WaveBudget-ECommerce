@@ -11,16 +11,13 @@ const AddToStore = () => {
   const { id } = useParams();
   const [merchant, setMerchant] = useState();
   const [merchantId, setmerchantId] = useState();
-  //   const [key, setKey] = useState();
   const { currentUser } = useSelector((state) => state.user);
-  //const imageFile = {};
+
   useEffect(() => {
     async function getUser() {
       await getExistingDoc(currentUser)
         .then((res) => {
-          console.log(res);
           setMerchant(res.store);
-          //   setKey(res.key);
           setmerchantId(res.userId);
         })
         .catch((err) => {

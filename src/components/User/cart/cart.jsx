@@ -3,25 +3,23 @@ import GroupHeaders from "components/groupHeadings/groupHeaders";
 import React, { useState, useEffect } from "react";
 import empty from "../../../assets/images/emptycarts.png";
 import MobileCheckout from "components/mobilenav/mobileCheckout";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import CartCards from "./cartCard";
 import { useNavigate } from "react-router-dom";
 import { getExistingDoc } from "firebasedatas/firebaseAuth";
-import { HandlePayment } from "paystack/paystackInterface";
 import { toast } from "react-hot-toast";
 import timeFormat from "Utils/timeFormat";
 import { saveHistory } from "firebasedatas/transactionHistory";
 import PaymentNotification from "components/paymentnotification/paymentNote";
+import { formatter } from "Utils/helpers";
 const UserCart = () => {
-  const [isShow, setisShow] = useState(false);
+  const isShow = false;
   const { currentUser, payStatus } = useSelector((state) => state.user);
-  const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const { cartItems, overallPrice } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const [isNote, setisNote] = useState();
   const [transHistory, setTransHistory] = useState();
-  const dispatch = useDispatch();
   const dt = new Date();
   const month = dt.toLocaleString("default", { month: "long" });
   const day = dt.getDate();
@@ -33,8 +31,6 @@ const UserCart = () => {
     async function getUser() {
       await getExistingDoc(currentUser)
         .then((res) => {
-          console.log(res);
-          setUsername(res.name);
           setEmail(res.email);
         })
         .catch((err) => {
@@ -43,7 +39,7 @@ const UserCart = () => {
     }
 
     getUser();
-  }, []);
+  }, [currentUser]);
 
   const handlePay = () => {
     if (!currentUser) {
@@ -51,7 +47,7 @@ const UserCart = () => {
       return;
     }
     // HandlePayment(email, parseFloat(overallPrice), dispatch);
-    navigate("/cart/initiate-payment")
+    navigate("/cart/initiate-payment");
   };
 
   useEffect(() => {
@@ -59,14 +55,14 @@ const UserCart = () => {
       if (payStatus) {
         setTransHistory(cartItems);
 
-        await saveHistory( {
+        await saveHistory({
           status: payStatus,
-          type: 'checkout',
+          type: "checkout",
           cart: cartItems,
-          userId:currentUser,
-          date:`${day} ${month} ${year}`,
-          time:`${timeFormat(hours, minutes, seconds, amPm)}`,
-          createdAt: dt.getTime()
+          userId: currentUser,
+          date: `${day} ${month} ${year}`,
+          time: `${timeFormat(hours, minutes, seconds, amPm)}`,
+          createdAt: dt.getTime(),
         })
           .then((res) => {
             console.log(res);
@@ -80,7 +76,8 @@ const UserCart = () => {
     };
 
     history();
-  
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payStatus]);
   return (
     <div className="w-full h-full">
@@ -98,8 +95,7 @@ const UserCart = () => {
               onClick={() => {
                 navigate("/");
               }}
-              className="text-white sm:w-[50%] bg-sky-900 border py-2 space-x-2   rounded-lg flex justify-center items-center w-[50%]"
-            >
+              className="text-white sm:w-[50%] bg-sky-900 border py-2 space-x-2   rounded-lg flex justify-center items-center w-[50%]">
               Start Shopping
             </button>
           </div>
@@ -108,14 +104,11 @@ const UserCart = () => {
           <div className="max-[650px]:hidden space-y-5 xl:right-[50px] right-[30px] top-[200px] fixed w-[250px] xl:w-[300px] h-fit rounded-md bg-white p-3 flex flex-col justify-center items-center">
             <div className="text-[16px] w-full font-semibold flex items-center justify-between">
               <span className="">Total:</span>
-              <span>{`₦${overallPrice}`}</span>
+              <span>{formatter.format(overallPrice)}</span>
             </div>
 
-            <button
-              onClick={handlePay}
-              className="text-white py-2 bg-[#009999] rounded-2xl flex justify-center items-center w-full"
-            >
-              CheckOut
+            <button onClick={handlePay} className="text-white py-2 bg-[#009999] rounded-2xl flex justify-center items-center w-full">
+              Checkout
             </button>
           </div>
         )}
@@ -123,24 +116,14 @@ const UserCart = () => {
           {cartItems?.map(({ name, curPrice, image, count }, idx) => {
             return (
               <div key={idx} className="w-full h-full">
-                <CartCards
-                  name={name}
-                  image={image}
-                  price={curPrice}
-                  quantity={count}
-                  id={idx}
-                />
+                <CartCards name={name} image={image} price={curPrice} quantity={count} id={idx} />
               </div>
             );
           })}
         </div>
       </div>
 
-      <PaymentNotification
-        isNote={isNote}
-        setisNote={setisNote}
-        transHistory={transHistory}
-      />
+      <PaymentNotification isNote={isNote} setisNote={setisNote} transHistory={transHistory} />
       <MobileCheckout total={overallPrice} email={email} />
     </div>
   );

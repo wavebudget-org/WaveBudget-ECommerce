@@ -278,7 +278,7 @@ const registration = (registrationParams, navigate, setLoading) => {
     await axios
       .post("/auth/signup", registrationParams)
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         const payload = res.data.data;
 
         dispatch(getUserPersonalInformation(payload));
@@ -323,7 +323,7 @@ const LoginAction = (loginParams, navigate, setLoading) => {
     await axios
       .post("/auth/login", loginParams)
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         const { user } = res.data.data;
         dispatch(GetUsersSuccess(user));
         const { token } = res.data.data.accessToken;

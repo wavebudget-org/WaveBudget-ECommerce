@@ -9,68 +9,51 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { GetUsersSuccess } from "Redux/Actions/ActionCreators";
+import { useForm } from "react-hook-form";
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState("");
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleSubmit = async () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const submit = async (e) => {
     setLoading(true);
-    const validateData = {
-      name,
-      email,
-      password,
-    };
-    for (let i in validateData) {
-      if (validateData[i] === "") {
-        toast.error(`${i} is empty`);
-        return;
-      }
-    }
 
-    
     let form = {
-      name,
-      email,
+      name: e.name,
+      email: e.email,
       type: "Customer",
     };
 
-    await userRegistration(email, password)
-      .then( async(res) => {
-        console.log(res.user.uid);
-        //setuserId(res.user.uid);
-        const {uid} = res.user
+    await userRegistration(e.email, e.password)
+      .then(async (res) => {
+        const { uid } = res.user;
         console.log(uid);
-        await saveData(res.user.uid, {userId:res.user.uid, ...form})
-        .then((res) => {
-          console.log(res);
-          dispatch(GetUsersSuccess(uid))
-          toast.success("successful registration");
-          setName("")
-          setEmail("")
-          setPassword("")
-          navigate("/")
-        })
-        .catch((err) => {
-          console.log(err);
-          toast.error(err.code);
-        });
+        await saveData(res.user.uid, { userId: res.user.uid, ...form })
+          .then((res) => {
+            dispatch(GetUsersSuccess(uid));
+            toast.success("Successful Registration");
+            reset();
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err);
+            toast.error(err.code);
+          });
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        toast.error(err.code)
+        toast.error(err.code);
         setLoading(false);
       });
-
-    //console.log('this is the form',form)
-
-
-      
   };
 
   return (
@@ -78,37 +61,30 @@ const SignUp = () => {
       <div className="w-full h-full">
         <div className="bg-white py-3 px-6 min-[450px]:py-4 min-[450px]:px-4">
           <div
-          onClick={() => {
-            navigate("/")
-          }}
-          className="flex space-x-2 items-center">
+            onClick={() => {
+              navigate("/");
+            }}
+            className="flex space-x-2 items-center">
             <div className="w-10 h-6">
               <img className="w-full h-full" src={logo} alt="" />
             </div>
             <div className="flex flex-col justify-start">
               <div className="uppercase font-semibold text-[#009999]">Wave</div>
-              <div className="uppercase font-semibold text-[#009999]">
-                Budget
-              </div>
+              <div className="uppercase font-semibold text-[#009999]">Budget</div>
             </div>
           </div>
         </div>
         <div className="bg-gray-300 text-sm flex justify-around  w-full h-full items-center">
           <div className="hidden md:block w-[350px] h-[350px] lg:w-[400px] lg:h-[400px]">
-            <img
-              className="w-full h-full mix-blend-multiply"
-              src={pay}
-              alt="pay"
-            />
+            <img className="w-full h-full mix-blend-multiply" src={pay} alt="pay" />
           </div>
 
-          <div className="w-[80vw] h-fit min-[450px]:w-[60%] min-[450px]:h-fit md:w-[350px] md:h-fit lg:w-[400px] lg:h-fit flex flex-col justify-center items-center bg-white p-4 space-y-3 rounded-xl shadow-lg">
+          <form
+            onSubmit={handleSubmit(submit)}
+            className="w-[80vw] h-fit min-[450px]:w-[60%] min-[450px]:h-fit md:w-[350px] md:h-fit lg:w-[400px] lg:h-fit flex flex-col justify-center items-center bg-white p-4 space-y-3 rounded-xl shadow-lg">
             <p className="text-zinc-800 font-semibold">Sign Up</p>
             <div className="form-group space-y-3 w-full">
-              <label
-                className="block font-semibold text-zinc-800"
-                htmlFor="name"
-              >
+              <label className="block font-semibold text-zinc-800" htmlFor="name">
                 Name
               </label>
               <input
@@ -116,14 +92,12 @@ const SignUp = () => {
                 type="text"
                 placeholder="Enter your name"
                 name="name"
-                onChange={(e) => setName(e.target.value)}
+                {...register("name", { required: "Name is required" })}
               />
+              {errors.name && <span className="font-small text-[#FF0000]">{errors.name.message}</span>}
             </div>
             <div className="form-group space-y-3 w-full">
-              <label
-                className="block font-semibold text-zinc-800"
-                htmlFor="email"
-              >
+              <label className="block font-semibold text-zinc-800" htmlFor="email">
                 Email Address
               </label>
               <input
@@ -131,14 +105,12 @@ const SignUp = () => {
                 type="email"
                 placeholder="Enter your email address"
                 name="email"
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("email", { required: "Email Address is required" })}
               />
+              {errors.email && <span className="font-small text-[#FF0000]">{errors.email.message}</span>}
             </div>
             <div className="form-group space-y-3 w-full">
-              <label
-                className="block font-semibold text-zinc-800"
-                htmlFor="password"
-              >
+              <label className="block font-semibold text-zinc-800" htmlFor="password">
                 Password
               </label>
               <div className="relative">
@@ -147,37 +119,34 @@ const SignUp = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter a password"
                   name="password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  {...register("password", { required: "Password is required" })}
                 />
                 <div
                   onClick={() => {
                     setShowPassword(!showPassword);
                   }}
-                  className="absolute right-3 top-3 max-[450px]:top-[0.5rem]"
-                >
-                  <img
-                    src={viewpassword}
-                    alt="viewpassword"
-                    className="w-full h-full object-cover"
-                  />
+                  className="absolute right-3 top-3 max-[450px]:top-[0.5rem]">
+                  <img src={viewpassword} alt="viewpassword" className="w-full h-full object-cover" />
                 </div>
               </div>
+              {errors.password && <span className="font-small text-[#FF0000]">{errors.password.message}</span>}
             </div>
 
-            <button
-              onClick={handleSubmit}
-              className="bg-[#009999] text-white sm:py-3 py-2 rounded-md flex items-center w-full justify-center"
-            >
+            <button type="submit" className="bg-[#009999] text-white sm:py-3 py-2 rounded-md flex items-center w-full justify-center">
               {loading ? <Loader /> : <span>Sign up</span>}
             </button>
-          
-                  
-              <span>Already have an account? <span 
-              onClick={() => {
-                navigate("/signin")
-              }}
-              className='mr-3 text-blue-700'>Sign in</span></span>
-          </div>
+
+            <span>
+              Already have an account?{" "}
+              <span
+                onClick={() => {
+                  navigate("/signin");
+                }}
+                className="mr-3 text-blue-700">
+                Sign in
+              </span>
+            </span>
+          </form>
         </div>
       </div>
     </div>

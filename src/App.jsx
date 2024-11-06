@@ -24,8 +24,7 @@ import {
   MerchantDetail,
   UserHistory,
   PaymentGateway,
-  InitiatePay
-
+  InitiatePay,
 } from "Pages";
 
 import Scrolltotop from "components/UI/ScrollToTop";
@@ -83,7 +82,7 @@ const App = () => {
           <Route path="/admin/userdetail/:id" element={<UserDetail />} />
           <Route path="/admin/merchant" element={<AdminMerchant />} />
           <Route path="/admin/merchantdetail/:id" element={<MerchantDetail />} />
-         
+
           {/*    AUTH PAGE */}
         </Routes>
       </Router>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import pxl from "../../assets/images/pxl.jpg";
 import HidHeader from "components/Landing/minors/headers/hidHeader";
 import { BsCartPlus } from "react-icons/bs";
 import { BiArrowBack } from "react-icons/bi";
@@ -10,22 +9,21 @@ import ImageSlider from "./imageslider/imageSlider";
 //import AuthCard from "components/Landing/minors/authcard/authcard";
 import MobileBtns from "components/mobilenav/mobileBtns";
 import GroupHeaders from "components/groupHeadings/groupHeaders";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { itemsToCart, calculateTotal } from "Redux/Actions/ActionCreators";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import timeFormat from "Utils/timeFormat";
 import { getExistingDoc } from "firebasedatas/firebaseAuth";
-import { HandlePayment } from "paystack/paystackInterface";
 import { getExistingProduct } from "firebasedatas/getExisting";
 import PaymentNotification from "components/paymentnotification/paymentNote";
 import { saveHistory } from "firebasedatas/transactionHistory";
+import { formatter } from "Utils/helpers";
 const ProductDetail = () => {
   const { id } = useParams();
   //const { state } = useLocation();
   //const { name, description, price, qty, storeName, images } = state;
   const { cartItems } = useSelector((state) => state.cart);
-  const [isShow, setisShow] = useState(false);
   const [username, setUsername] = useState();
   const [name, setname] = useState();
   const [description, setdescription] = useState();
@@ -33,7 +31,7 @@ const ProductDetail = () => {
   const [storeName, setStorename] = useState();
   const [images, setImages] = useState();
   const [email, setEmail] = useState();
-  const [isVisible, setIsVisible] = useState(true);
+  const isVisible = true;
   const { currentUser, payStatus } = useSelector((state) => state.user);
   const [isSlider, setisSlider] = useState(false);
   const [price, setprice] = useState();
@@ -56,7 +54,6 @@ const ProductDetail = () => {
     async function getUser() {
       await getExistingDoc(currentUser)
         .then((res) => {
-          console.log(res);
           setUsername(res.name);
           setEmail(res.email);
         })
@@ -66,7 +63,7 @@ const ProductDetail = () => {
     }
 
     getUser();
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     if (!id) return;
@@ -74,7 +71,6 @@ const ProductDetail = () => {
     async function getProduct() {
       await getExistingProduct(id)
         .then((res) => {
-          console.log(res);
           const { name, description, price, qty, storeName, image } = res;
           setname(name);
           setdescription(description);
@@ -91,7 +87,7 @@ const ProductDetail = () => {
         });
     }
     getProduct();
-  }, []);
+  }, [id]);
 
   const incItem = () => {
     setCount(count + 1);
@@ -122,7 +118,7 @@ const ProductDetail = () => {
       price: parseInt(price),
       image: images[0],
       storeName,
-      userId:currentUser,
+      userId: currentUser,
       curPrice,
       count,
     };
@@ -133,21 +129,14 @@ const ProductDetail = () => {
     toast.success("Item added to cart successfully");
   };
 
-  const handlePay =  () => {
+  const handlePay = () => {
     if (!currentUser) {
       toast.error("You must be logged in to buy");
       return;
     }
     // await HandlePayment(email, parseFloat(curPrice), dispatch);
-    navigate(`/product/payment-gateway/${id}`)
+    navigate(`/product/payment-gateway/${id}`);
   };
-
-  /**
-   * 
-   * 
-
-  
-   */
 
   useEffect(() => {
     const history = async () => {
@@ -163,7 +152,7 @@ const ProductDetail = () => {
 
         setTransHistory([payload]);
 
-        await saveHistory( {
+        await saveHistory({
           type: "no-checkout",
           date: `${day} ${month} ${year}`,
           time: `${timeFormat(hours, minutes, seconds, amPm)}`,
@@ -182,6 +171,7 @@ const ProductDetail = () => {
     };
 
     history();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payStatus]);
 
   const handleInstallment = () => {
@@ -209,7 +199,9 @@ const ProductDetail = () => {
       "Store:   " +
       storeName +
       "%0a" +
-      'Product link:  ' + `https://wavebudget.vercel.app/${id}` + '%0a';
+      "Product link:  " +
+      `https://wavebudget.vercel.app/${id}` +
+      "%0a";
 
     window.open(url, "blank").focus();
   };
@@ -225,23 +217,13 @@ const ProductDetail = () => {
       <div className="mt-[56px] min-[450px]:mt-[60px] sm:mt-[80px] mb-[1rem] w-full bg-white p-2 min-[450px]:p-3 gap-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <div className="w-full min-[450px]:mt-0 mt-[35px] mx-auto">
           <div className="w-[93%] mx-auto flex flex-col cursor-pointer sm:row-span-2">
-            <div className="w-full h-[300px] min-[450px]:h-[400px]  rounded-sm">
-              {images && (
-                <img
-                  className="w-full h-full rounded-sm"
-                  src={images[0]}
-                  alt="pxl"
-                />
-              )}
-            </div>
+            <div className="w-full h-[300px] min-[450px]:h-[400px]  rounded-sm">{images && <img className="w-full h-full rounded-sm" src={images[0].url} alt="pxl" />}</div>
             <button
               onClick={() => {
                 setisSlider(!isSlider);
               }}
-              className="flex justify-center space-x-2 items-center border rounded-sm min-[450px]:py-4 text-zinc-800 bg-white py-2"
-            >
-              <MdPreview className="text-[16px]" />{" "}
-              <span className="">View image detail</span>
+              className="flex justify-center space-x-2 items-center border rounded-sm min-[450px]:py-4 text-zinc-800 bg-white py-2">
+              <MdPreview className="text-[16px]" /> <span className="">View image detail</span>
             </button>
           </div>
         </div>
@@ -266,13 +248,13 @@ const ProductDetail = () => {
           <div className="capitalize border-b p-2 w-full grid grid-cols-2 gap-[3.5rem] items-center">
             <span>Outright price:</span>
             <span>
-              <b>{`₦${parseInt(price) || 0}`}</b>
+              <b>{formatter.format(parseInt(price)) || formatter.format(0)}</b>
             </span>
           </div>
           <div className="capitalize border-b p-2 w-full grid grid-cols-2 gap-[3.5rem] items-center">
             <span> BNPL price:</span>
             <span>
-              <b>{`₦${parseInt(price) + parseInt(price * 0.1) || 0}`}</b>
+              <b>{formatter.format(parseInt(price) + parseInt(price * 0.1)) || formatter.format(0)}</b>
             </span>
           </div>
           <div className="capitalize border-b p-2 w-full grid grid-cols-2 gap-[3.5rem] items-center">
@@ -282,19 +264,13 @@ const ProductDetail = () => {
             </span>
           </div>
 
-          <div class="w-[50%] my-2 flex border text-zinc-800 font-semibold bg-white h-10 sm:h-14 items-center rounded-sm sm:rounded-md">
-            <button
-              onClick={incItem}
-              class="p-2 flex justify-center items-center hover:text-white rounded-l-md hover:bg-zinc-800 h-full w-4/12"
-            >
-              <div>+</div>
-            </button>
-            <button class="p-2 border-l border-r h-full w-5/12">{count}</button>
-            <button
-              onClick={decItem}
-              class="p-2 flex justify-center items-center rounded-r-md hover:text-white hover:hover:bg-zinc-800 h-full w-4/12"
-            >
+          <div className="w-[50%] my-2 flex border text-zinc-800 font-semibold bg-white h-10 sm:h-14 items-center rounded-sm sm:rounded-md">
+            <button onClick={decItem} className="p-2 flex justify-center items-center rounded-r-md hover:text-white hover:hover:bg-zinc-800 h-full w-4/12">
               <div>-</div>
+            </button>
+            <button className="p-2 border-l border-r h-full w-5/12">{count}</button>
+            <button onClick={incItem} className="p-2 flex justify-center items-center hover:text-white rounded-l-md hover:bg-zinc-800 h-full w-4/12">
+              <div>+</div>
             </button>
           </div>
         </div>
@@ -303,31 +279,22 @@ const ProductDetail = () => {
           <div className=" flex w-[90%] sm:w-full lg:w-[90%] justify-between items-center p-2">
             <span>Outright price:</span>{" "}
             <span>
-              <b>{`₦${curPrice || 0}`}</b>
+              <b>{formatter.format(curPrice) || formatter.format(0)}</b>
             </span>
           </div>
           <div className=" flex w-[90%] sm:w-full lg:w-[90%] justify-between items-center p-2">
             <span>Installment price:</span>{" "}
             <span>
-              <b>{`₦${curBNPL || 0}`}</b>
+              <b>{formatter.format(curBNPL) || formatter.format(0)}</b>
             </span>
           </div>
-          <button
-            onClick={handlePay}
-            className="text-white sm:w-full lg:w-[90%] bg-[#009999] flex rounded-lg py-3 justify-center items-center w-[90%]"
-          >
+          <button onClick={handlePay} className="text-white sm:w-full lg:w-[90%] bg-[#009999] flex rounded-lg py-3 justify-center items-center w-[90%]">
             Buy now
           </button>
-          <button
-            onClick={handleInstallment}
-            className="bg-white sm:w-full lg:w-[90%] border-[#009999] py-3  rounded-lg border flex justify-center items-center w-[90%]"
-          >
+          <button onClick={handleInstallment} className="bg-white sm:w-full lg:w-[90%] border-[#009999] py-3  rounded-lg border flex justify-center items-center w-[90%]">
             Buy on installment
           </button>
-          <button
-            onClick={addToCart}
-            className="text-white sm:w-full lg:w-[90%] bg-sky-900 border py-3 space-x-2   rounded-lg flex justify-center items-center w-[90%]"
-          >
+          <button onClick={addToCart} className="text-white sm:w-full lg:w-[90%] bg-sky-900 border py-3 space-x-2   rounded-lg flex justify-center items-center w-[90%]">
             <span>
               <BsCartPlus />
             </span>
@@ -345,31 +312,16 @@ const ProductDetail = () => {
             images.length > 1 &&
             images.map((item, index) => {
               return (
-                <div
-                  key={index}
-                  className="w-full h-[400px] rounded-sm object-cover"
-                >
-                  <img
-                    className="w-full h-full rounded-sm"
-                    src={item}
-                    alt="pxl"
-                  />
+                <div key={index} className="w-full h-[400px] rounded-sm object-cover">
+                  <img className="w-full h-full rounded-sm" src={item.url} alt="pxl" />
                 </div>
               );
             })}
         </div>
       </div>
 
-      <ImageSlider
-        isSlider={isSlider}
-        setisSlider={setisSlider}
-        images={images}
-      />
-      <PaymentNotification
-        isNote={isNote}
-        setisNote={setisNote}
-        transHistory={transHistory}
-      />
+      <ImageSlider isSlider={isSlider} setisSlider={setisSlider} images={images} />
+      <PaymentNotification isNote={isNote} setisNote={setisNote} transHistory={transHistory} />
       <WaveFooter />
       <MobileBtns
         name={name}

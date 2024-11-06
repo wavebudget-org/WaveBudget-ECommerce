@@ -6,10 +6,6 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 export const saveData = async (id, payload) => {
   const userRef = doc(db, "userinformation", id);
 
-  if (payload) {
-    console.log(id, payload);
-  }
-
   if (payload.cacImage) {
     let result;
     const imgRef = ref(storage, `images/${payload.cacImage + v4()}`);
