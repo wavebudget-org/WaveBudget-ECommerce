@@ -23,6 +23,8 @@ import PaymentGateway from "components/payment-gateway/Payment";
 import InitiatePay from "components/payment-gateway/Initiate-Pay";
 import MerchantOrders from "components/merchants/orders";
 import SingleOrder from "components/merchants/singleOrder";
+import AdminOrders from "components/admin/orders";
+
 export {
   HomePage,
   SignIn,
@@ -49,4 +51,5 @@ export {
   InitiatePay,
   MerchantOrders,
   SingleOrder,
+  AdminOrders,
 };

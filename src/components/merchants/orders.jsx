@@ -6,12 +6,10 @@ import DesktopDashNav from "./dashboard/desktopNav/desktopdashnav";
 import MobileDashboard from "./dashboard/mobiledashnav";
 import { getOrders } from "firebasedatas/getPurchased";
 import { formatter } from "Utils/helpers";
-import { useNavigate } from "react-router-dom";
 import "../../../src/styles.css";
 
 const MerchantOrders = () => {
   const [merchant, setMerchant] = useState();
-  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
 
   const [orders, setOrders] = useState([]);
@@ -63,7 +61,7 @@ const MerchantOrders = () => {
                 return item.cart?.map((items, index) => {
                   if (items.id === merchant.userId) {
                     return (
-                      <div className="assignSingle" key={index} onClick={() => navigate(`/seller/orders/${item.id}`)}>
+                      <div className="assignSingle" key={index}>
                         <p>{item.id}</p>
                         <p>{item.customerName}</p>
                         <p>{items.name}</p>

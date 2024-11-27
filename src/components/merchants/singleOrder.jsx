@@ -1,36 +1,19 @@
 import React, { useEffect, useState } from "react";
-import DesktopDashNav from "./dashboard/desktopNav/desktopdashnav";
-import TopNavBar from "./topnavbar";
-import { useSelector } from "react-redux";
-import { getExistingDoc } from "firebasedatas/firebaseAuth";
 import { useParams } from "react-router-dom";
 import { formatter } from "Utils/helpers";
 import { getSingleOrder } from "firebasedatas/getExisting";
 import { updateOrders } from "firebasedatas/getPurchased";
+import AdminTopBar from "components/admin/dashboard/adminTopBar";
+import AdminMobileDashboard from "components/admin/dashboard/adminmobileDash";
+import AdminDesktopDashboard from "components/admin/dashboard/admindesktopDash";
 
 const SingleOrder = () => {
   const { id } = useParams();
-  const [merchant, setMerchant] = useState();
   const [state, setState] = useState();
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState(false);
   const [amount, setAmount] = useState(0);
   const [order, setOrder] = useState();
-  const { currentUser } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    async function getUser() {
-      await getExistingDoc(currentUser)
-        .then((res) => {
-          setMerchant(res.store);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    getUser();
-  }, [currentUser]);
 
   useEffect(() => {
     if (!id) return;
@@ -52,8 +35,7 @@ const SingleOrder = () => {
   }, [id, active]);
   return (
     <div className="w-full h-full  bg-gray-50 inset-0 sm:pb-32 fixed overflow-y-auto overflow-x-hidden">
-      <TopNavBar merchant={merchant} />
-      <DesktopDashNav />
+      <AdminTopBar />
       <div className="let swipeIn mt-[40px] text-zinc-700 min-[450px]:mt-[60px] w-full sm:w-[95%] min-[1000px]:w-[80%] xl:w-[83%] pb-[5rem] sm:pb-[5rem] space-y-[5%] float-right p-6 text-">
         <div className=" max-[450px]:mt-[57px] max-[450px]:pt-[35px] w-full">
           <div className="singleOrderCont">
@@ -85,8 +67,8 @@ const SingleOrder = () => {
                         Status:{" "}
                         <p
                           onClick={() => setActive(true)}
-                          className={order.status === "completed" ? "completed" : order.status === "failed" || order.status === "cancelled" ? "failed" : "ongoing"}>
-                          {order.status}
+                          className={order?.status === "completed" ? "completed" : order?.status === "failed" || order?.status === "cancelled" ? "failed" : "ongoing"}>
+                          {order?.status}
                         </p>
                       </h2>
                     </div>
@@ -159,7 +141,7 @@ const SingleOrder = () => {
           <div className="orderChange">
             <h2>Order Status</h2>
             <select onChange={(e) => setState(e.target.value)}>
-              <option value="">{order.status}</option>
+              <option value="">{order?.status}</option>
               <option value="pending">Pending</option>
               <option value="processing">Processing</option>
               <option value="completed">Completed</option>
@@ -186,6 +168,8 @@ const SingleOrder = () => {
           </div>
         </div>
       </div>
+      <AdminDesktopDashboard />
+      <AdminMobileDashboard />
     </div>
   );
 };
