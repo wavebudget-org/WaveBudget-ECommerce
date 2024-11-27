@@ -4,20 +4,14 @@ import { BsCartPlus } from "react-icons/bs";
 import { BiArrowBack } from "react-icons/bi";
 import { MdPreview } from "react-icons/md";
 import WaveFooter from "components/Landing/minors/footer/footer";
-//import MobileNav from "components/mobilenav/mobileNav";
 import ImageSlider from "./imageslider/imageSlider";
-//import AuthCard from "components/Landing/minors/authcard/authcard";
-import MobileBtns from "components/mobilenav/mobileBtns";
 import GroupHeaders from "components/groupHeadings/groupHeaders";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { itemsToCart, calculateTotal } from "Redux/Actions/ActionCreators";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import timeFormat from "Utils/timeFormat";
 import { getExistingDoc } from "firebasedatas/firebaseAuth";
 import { getExistingProduct } from "firebasedatas/getExisting";
-import PaymentNotification from "components/paymentnotification/paymentNote";
-import { saveHistory } from "firebasedatas/transactionHistory";
 import { formatter } from "Utils/helpers";
 const ProductDetail = () => {
   const { id } = useParams();
@@ -29,25 +23,20 @@ const ProductDetail = () => {
   const [description, setdescription] = useState();
   const [qty, setQty] = useState();
   const [storeName, setStorename] = useState();
+  const [merchantId, setMerchantId] = useState();
+  const [category, setCategory] = useState();
   const [images, setImages] = useState();
   const [email, setEmail] = useState();
   const isVisible = true;
-  const { currentUser, payStatus } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const [isSlider, setisSlider] = useState(false);
   const [price, setprice] = useState();
   const [curPrice, setcurPrice] = useState();
   const [curBNPL, setcurBNPL] = useState();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const [count, setCount] = useState(1);
   const [bnpl, setbnpl] = useState();
-  const [transHistory, setTransHistory] = useState();
-  const [isNote, setisNote] = useState(false);
-  const dt = new Date();
-  const month = dt.toLocaleString("default", { month: "long" });
-  const day = dt.getDate();
-  const year = dt.getFullYear();
-  let hours, minutes, seconds, amPm;
   //console.log(name, description, price.)
   useEffect(() => {
     if (!currentUser) return;
@@ -71,13 +60,15 @@ const ProductDetail = () => {
     async function getProduct() {
       await getExistingProduct(id)
         .then((res) => {
-          const { name, description, price, qty, storeName, image } = res;
+          const { name, description, price, qty, storeName, image, merchantId, category } = res;
           setname(name);
+          setCategory(category);
           setdescription(description);
           setQty(qty);
           setStorename(storeName);
           setImages(image);
           setprice(price);
+          setMerchantId(merchantId);
           setbnpl(parseInt(price) + parseInt(price * 0.1));
           setcurBNPL(parseInt(price) + parseInt(price * 0.1));
           setcurPrice(parseInt(price));
@@ -117,10 +108,16 @@ const ProductDetail = () => {
       name: name,
       price: parseInt(price),
       image: images[0],
+      images,
+      description: description,
       storeName,
       userId: currentUser,
       curPrice,
+      qty: Number(qty),
+      category: category,
+      merchantId,
       count,
+      productId: id,
     };
     dispatch(itemsToCart(payload, cartItems));
 
@@ -128,51 +125,6 @@ const ProductDetail = () => {
     dispatch(calculateTotal(cartItems));
     toast.success("Item added to cart successfully");
   };
-
-  const handlePay = () => {
-    if (!currentUser) {
-      toast.error("You must be logged in to buy");
-      return;
-    }
-    // await HandlePayment(email, parseFloat(curPrice), dispatch);
-    navigate(`/product/payment-gateway/${id}`);
-  };
-
-  useEffect(() => {
-    const history = async () => {
-      if (payStatus) {
-        const payload = {
-          userId: currentUser,
-          name: name,
-          curPrice: parseInt(curPrice),
-          status: payStatus,
-          storeName,
-          count,
-        };
-
-        setTransHistory([payload]);
-
-        await saveHistory({
-          type: "no-checkout",
-          date: `${day} ${month} ${year}`,
-          time: `${timeFormat(hours, minutes, seconds, amPm)}`,
-          createdAt: dt.getTime(),
-          ...payload,
-        })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-
-        setisNote(true);
-      }
-    };
-
-    history();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [payStatus]);
 
   const handleInstallment = () => {
     if (!currentUser) {
@@ -265,11 +217,11 @@ const ProductDetail = () => {
           </div>
 
           <div className="w-[50%] my-2 flex border text-zinc-800 font-semibold bg-white h-10 sm:h-14 items-center rounded-sm sm:rounded-md">
-            <button onClick={decItem} className="p-2 flex justify-center items-center rounded-r-md hover:text-white hover:hover:bg-zinc-800 h-full w-4/12">
+            <button onClick={decItem} className="p-2 flex justify-center items-center rounded-l-md hover:text-white hover:hover:bg-zinc-800 h-full w-4/12">
               <div>-</div>
             </button>
             <button className="p-2 border-l border-r h-full w-5/12">{count}</button>
-            <button onClick={incItem} className="p-2 flex justify-center items-center hover:text-white rounded-l-md hover:bg-zinc-800 h-full w-4/12">
+            <button onClick={incItem} className="p-2 flex justify-center items-center hover:text-white rounded-r-md hover:bg-zinc-800 h-full w-4/12">
               <div>+</div>
             </button>
           </div>
@@ -288,9 +240,10 @@ const ProductDetail = () => {
               <b>{formatter.format(curBNPL) || formatter.format(0)}</b>
             </span>
           </div>
-          <button onClick={handlePay} className="text-white sm:w-full lg:w-[90%] bg-[#009999] flex rounded-lg py-3 justify-center items-center w-[90%]">
+          {/* <PaystackButton {...componentProps} className="text-white sm:w-full lg:w-[90%] bg-[#009999] flex rounded-lg py-3 justify-center items-center w-[90%]" /> */}
+          {/* <button onClick={handlePay} className="text-white sm:w-full lg:w-[90%] bg-[#009999] flex rounded-lg py-3 justify-center items-center w-[90%]">
             Buy now
-          </button>
+          </button> */}
           <button onClick={handleInstallment} className="bg-white sm:w-full lg:w-[90%] border-[#009999] py-3  rounded-lg border flex justify-center items-center w-[90%]">
             Buy on installment
           </button>
@@ -321,9 +274,8 @@ const ProductDetail = () => {
       </div>
 
       <ImageSlider isSlider={isSlider} setisSlider={setisSlider} images={images} />
-      <PaymentNotification isNote={isNote} setisNote={setisNote} transHistory={transHistory} />
       <WaveFooter />
-      <MobileBtns
+      {/* <MobileBtns
         name={name}
         price={parseInt(price)}
         image={images && images[0]}
@@ -332,7 +284,7 @@ const ProductDetail = () => {
         store={storeName}
         curPrice={parseFloat(curPrice)}
         plink={`https://wavebudget.vercel.app/${id}`}
-      />
+      /> */}
     </div>
   );
 };

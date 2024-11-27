@@ -5,40 +5,35 @@ import AdminTopBar from "../dashboard/adminTopBar";
 import { getCustomers, getMerchant } from "firebasedatas/userInformation";
 
 const AdminHome = () => {
-    const [noOfCustomers, setnoOfCustomers] = useState()
-    const [noOfSellers, setnoOfSellers] = useState()
-    const [noOfItem, setnoOfItem] = useState()
+  const [noOfCustomers, setnoOfCustomers] = useState();
+  const [noOfSellers, setnoOfSellers] = useState();
 
-
-    useEffect(() => {
-        const customers = []
-        const sellers = []
-        const items = []
-    async function getUsers () {
-        await getCustomers (customers)
+  useEffect(() => {
+    const customers = [];
+    const sellers = [];
+    async function getUsers() {
+      await getCustomers(customers)
         .then((res) => {
-            console.log(res)
-            console.log(res.length)
-            setnoOfCustomers(res.length)
+          console.log(res);
+          console.log(res.length);
+          setnoOfCustomers(res.length);
         })
         .catch((err) => {
-            console.log(err)
-        })
-    
-    await getMerchant (sellers)
+          console.log(err);
+        });
+
+      await getMerchant(sellers)
         .then((res) => {
-            console.log(res)
-            setnoOfSellers(res.length)
+          console.log(res);
+          setnoOfSellers(res.length);
         })
         .catch((err) => {
-            console.log(err)
-        })
+          console.log(err);
+        });
     }
 
-    getUsers()
-    },[])
-
-
+    getUsers();
+  }, []);
 
   return (
     <div className="w-full h-full">
@@ -50,11 +45,9 @@ const AdminHome = () => {
             <div className="">Number of Customers </div>
           </div>
           <div className="min-[450px]:h-[250px] h-[150px] overflow-hidden text-white  shadow-lg bg-orange-600 p-3 flex flex-col space-y-3 items-center justify-center max-[450px]:rounded-lg rounded-xl">
-            <div className="text-5xl">{noOfSellers ||0}</div>
+            <div className="text-5xl">{noOfSellers || 0}</div>
             <div className="">Number of Merchants </div>
           </div>
-
-          
         </div>
       </div>
       <AdminDesktopDashboard />

@@ -1,23 +1,23 @@
 import React from "react";
 import { IoIosClose } from "react-icons/io";
 import timeFormat from "Utils/timeFormat";
-import { useDispatch, useSelector } from "react-redux";
-import { getPaymentstatus } from "Redux/Actions/ActionCreators";
-const PaymentNotification = ({ isNote, setisNote, transHistory }) => {
-  const dispatch = useDispatch();
-  const { payStatus } = useSelector((state) => state.user);
+import { useDispatch } from "react-redux";
+import { resetCart } from "Redux/Actions/ActionCreators";
+const PaymentNotification = ({ isNote, setisNote, transHistory, payStatus, setStatus }) => {
   const dt = new Date();
   const month = dt.toLocaleString("default", { month: "long" });
   const day = dt.getDate();
   const year = dt.getFullYear();
   let hours, minutes, seconds, amPm;
   // const {name, price, status, storeName, curPrice, count} = transHistory
+  const dispatch = useDispatch();
 
   return (
     <div
       onClick={() => {
         setisNote(!isNote);
-        dispatch(getPaymentstatus(""));
+        setStatus("");
+        if (payStatus === "Success") dispatch(resetCart());
       }}
       className={isNote ? " fixed text-zinc-700 z-[99] inset-0 h-full w-full bg-black bg-opacity-[0.5] flex items-center justify-center" : "hidden"}>
       <div
@@ -29,14 +29,15 @@ const PaymentNotification = ({ isNote, setisNote, transHistory }) => {
           onClick={(e) => {
             e.stopPropagation();
             setisNote(!isNote);
-            dispatch(getPaymentstatus(""));
+            setStatus("");
+            if (payStatus === "Success") dispatch(resetCart());
           }}
           className="absolute text-zinc-700 top-2 right-2">
           <IoIosClose className="text-[20px]" />
         </div>
         <div className="font-medium ">Payment Information</div>
 
-        <div className={payStatus === "success" ? "font-medium text-green-600" : "text-red-600 font-medium"}>{payStatus}</div>
+        <div className={payStatus === "Success" ? "font-medium text-green-600" : "text-red-600 font-medium"}>{payStatus}</div>
         <div className="overflow-auto space-y-2 h-[95vw] w-full">
           {transHistory?.map((item, index) => {
             return (

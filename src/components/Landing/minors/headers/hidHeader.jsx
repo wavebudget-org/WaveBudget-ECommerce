@@ -10,7 +10,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { getExistingDoc } from "firebasedatas/firebaseAuth";
 const HidHeader = ({ isVisibles }) => {
-  const { numOfCartItems } = useSelector((state) => state.cart);
+  const { cartItems } = useSelector((state) => state.cart);
   const [isVisible, setisVisisble] = useState(false);
   const [isCart, setisCart] = useState(false);
   const [isUser, setisUser] = useState(false);
@@ -118,14 +118,14 @@ const HidHeader = ({ isVisibles }) => {
             setisCart(false);
           }}
           className="relative">
-          {numOfCartItems > 0 && (
+          {cartItems.length > 0 && (
             <div className=" hidden min-[450px]:flex absolute top-[-10px] right-[-10px] bg-[#009999] rounded-full px-2  text-[10px] text-white items-center justify-center">
-              <span>{numOfCartItems}</span>
+              <span>{cartItems.length}</span>
             </div>
           )}
           <FaShoppingCart className="hidden min-[450px]:block hover:text-[#009999]" />
 
-          <CartCard isCart={isCart} name={name} items={numOfCartItems} />
+          <CartCard isCart={isCart} name={name} items={cartItems.length} />
         </div>
       </div>
     </div>

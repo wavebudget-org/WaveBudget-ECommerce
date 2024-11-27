@@ -44,46 +44,46 @@ const MobileBtns = ({ name, curPrice, image, bnpl, plink, count, store }) => {
     HandlePayment(email, parseFloat(curPrice), dispatch);
   };
 
-  useEffect(() => {
-    const history = async () => {
-      if (payStatus) {
-        setTransHistory([
-          {
-            name,
+  // useEffect(() => {
+  //   const history = async () => {
+  //     if (payStatus) {
+  //       setTransHistory([
+  //         {
+  //           name,
 
-            price: curPrice,
-            count,
-            storeName: store,
-          },
-        ]);
+  //           price: curPrice,
+  //           count,
+  //           storeName: store,
+  //         },
+  //       ]);
 
-        const payload = {
-          userId:currentUser,
-          status: payStatus,
-          name,
-          curPrice: parseInt(curPrice),
-          count,
-          storeName: store,
-          type: 'no-checkout',
-          date: `${day} ${month} ${year}`,
-          time: `${timeFormat(hours, minutes, seconds, amPm)}`,
-          createdAt: dt.getTime(),
-        };
+  //       const payload = {
+  //         userId:currentUser,
+  //         status: payStatus,
+  //         name,
+  //         curPrice: parseInt(curPrice),
+  //         count,
+  //         storeName: store,
+  //         type: 'no-checkout',
+  //         date: `${day} ${month} ${year}`,
+  //         time: `${timeFormat(hours, minutes, seconds, amPm)}`,
+  //         createdAt: dt.getTime(),
+  //       };
 
-        await saveHistory(payload)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+  //       await saveHistory(payload)
+  //         .then((res) => {
+  //           console.log(res);
+  //         })
+  //         .catch((err) => {
+  //           console.log(err);
+  //         });
 
-        setisNote(true);
-      }
-    };
+  //       setisNote(true);
+  //     }
+  //   };
 
-    history();
-  }, [payStatus]);
+  //   history();
+  // }, [payStatus]);
 
   const handleInstallment = () => {
     if (!currentUser) {
@@ -110,22 +110,18 @@ const MobileBtns = ({ name, curPrice, image, bnpl, plink, count, store }) => {
       "Store:   " +
       store +
       "%0a" +
-      'Product link:  ' + plink + '%0a';
+      "Product link:  " +
+      plink +
+      "%0a";
 
     window.open(url, "blank").focus();
   };
   return (
     <div className="min-[450px]:hidden fixed w-full border-t shadow-lg bg-white inset-x-0 flex gap-3 justify-between p-4 rounded-t-xl bottom-0">
-      <button
-        onClick={handlePay}
-        className="text-white bg-[#009999] flex rounded-2xl py-3 justify-center items-center w-[90%]"
-      >
+      <button onClick={handlePay} className="text-white bg-[#009999] flex rounded-2xl py-3 justify-center items-center w-[90%]">
         Buy now
       </button>
-      <button
-        onClick={handleInstallment}
-        className="text-white py-3 bg-sky-900 rounded-2xl flex justify-center items-center w-[90%]"
-      >
+      <button onClick={handleInstallment} className="text-white py-3 bg-sky-900 rounded-2xl flex justify-center items-center w-[90%]">
         Buy on installment
       </button>
     </div>

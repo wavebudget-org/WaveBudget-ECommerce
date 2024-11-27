@@ -77,6 +77,11 @@ const MerchantInfo = () => {
             )}
           </div>
         </div>
+        <div className="px-3 py-6 mt-[50px] relative bg-white rounded-lg mx-auto w-full h-fit">
+          <p className="text-zinc-700 space-y-2">
+            For Complains or Enquiries you can mail us on <a href="mailto:topeakinfe@gmail.com">admin@wavebudget.com</a>
+          </p>
+        </div>
       </div>
       <DesktopDashNav />
       <MobileDashboard />

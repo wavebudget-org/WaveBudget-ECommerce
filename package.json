@@ -23,6 +23,7 @@
     "react-hook-form": "^7.53.1",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.8.0",
+    "react-paystack": "^6.0.0",
     "react-redux": "^7.2.9",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",

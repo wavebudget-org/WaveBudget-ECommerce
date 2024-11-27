@@ -104,6 +104,7 @@ const resetCart = () => {
   //   dispatch({ type: type.ADD_FOODITEMS_TO_CART, payload: [] });
   //   dispatch({ type: "UPDATE_TOTAL_PRICE", payload: 0 });
   // };
+  console.log("Test");
   return {
     type: type.RESET_CART,
   };

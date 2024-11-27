@@ -13,38 +13,40 @@ import EditStore from "components/merchants/merchantCategory/editStore";
 import MerchantSignIn from "components/merchants/authentication/msignIn";
 import MerchantInfo from "components/merchants/merchantinfo/merchantInfo";
 import MerchantHome from "components/merchants/merchanthome/merchantHome";
-import AdminHome from "components/admin/adminhome/adminHome"
+import AdminHome from "components/admin/adminhome/adminHome";
 import AdminCustomer from "components/admin/admincustomer/adminCustomer";
 import UserDetail from "components/admin/userdetails/userDetail";
 import MerchantDetail from "components/admin/merchantdetail/merchantDetail";
 import AdminMerchant from "components/admin/adminmerchant/adminMerchant";
 import UserHistory from "components/User/userHistory";
-import PaymentGateway from "components/payment-gateway/Payment"
-import InitiatePay from "components/payment-gateway/Initiate-Pay"
+import PaymentGateway from "components/payment-gateway/Payment";
+import InitiatePay from "components/payment-gateway/Initiate-Pay";
+import MerchantOrders from "components/merchants/orders";
+import SingleOrder from "components/merchants/singleOrder";
 export {
-    HomePage,
-    SignIn,
-    SignUp,
-    ProductDetail,
-    UserCart,
-    DetailPage,
-    ActivationCard,
-    MerchantSignUp,
-    AddToStore,
-    AwaitActivation,
-    EditStore,
-    UserInfo,
-    MerchantSignIn,
-    MerchantInfo,
-    MerchantHome,
-    AdminHome,
-    AdminCustomer,
-    UserDetail,
-    MerchantDetail,
-    AdminMerchant,
-    UserHistory,
-    PaymentGateway,
-    InitiatePay
-
-}
-
+  HomePage,
+  SignIn,
+  SignUp,
+  ProductDetail,
+  UserCart,
+  DetailPage,
+  ActivationCard,
+  MerchantSignUp,
+  AddToStore,
+  AwaitActivation,
+  EditStore,
+  UserInfo,
+  MerchantSignIn,
+  MerchantInfo,
+  MerchantHome,
+  AdminHome,
+  AdminCustomer,
+  UserDetail,
+  MerchantDetail,
+  AdminMerchant,
+  UserHistory,
+  PaymentGateway,
+  InitiatePay,
+  MerchantOrders,
+  SingleOrder,
+};
