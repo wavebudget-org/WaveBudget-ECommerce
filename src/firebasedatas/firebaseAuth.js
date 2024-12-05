@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { auth, db, storage } from "./firebase";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { collection, query, where, addDoc, getDocs, setDoc, getDoc, doc, getFirestore, deleteDoc } from "firebase/firestore";
@@ -46,6 +46,10 @@ export const userRegistration = (email, password) => {
 //\ register merchant
 export const merchantRegistration = (email, password) => {
   return createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const forgotPassword = (email) => {
+  return sendPasswordResetEmail(auth, email);
 };
 
 ///get existing doc

@@ -6,7 +6,7 @@ import { MdPreview } from "react-icons/md";
 import WaveFooter from "components/Landing/minors/footer/footer";
 import ImageSlider from "./imageslider/imageSlider";
 import GroupHeaders from "components/groupHeadings/groupHeaders";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { itemsToCart, calculateTotal } from "Redux/Actions/ActionCreators";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
@@ -15,6 +15,7 @@ import { getExistingProduct } from "firebasedatas/getExisting";
 import { formatter } from "Utils/helpers";
 const ProductDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   //const { state } = useLocation();
   //const { name, description, price, qty, storeName, images } = state;
   const { cartItems } = useSelector((state) => state.cart);
@@ -100,8 +101,35 @@ const ProductDetail = () => {
     }
   };
   const addToCart = () => {
+    // if (!currentUser) {
+    //   toast.error("You must be logged in to add to cart");
+    //   return;
+    // }
+    const payload = {
+      name: name,
+      price: parseInt(price),
+      image: images[0],
+      images,
+      description: description,
+      storeName,
+      userId: currentUser,
+      curPrice,
+      qty: Number(qty),
+      category: category,
+      merchantId,
+      count,
+      productId: id,
+    };
+    dispatch(itemsToCart(payload, cartItems));
+
+    //navigate("/cart");
+    dispatch(calculateTotal(cartItems));
+    toast.success("Item added to cart successfully");
+  };
+
+  const handlePay = () => {
     if (!currentUser) {
-      toast.error("You must be logged in to add to cart");
+      toast.error("You must be logged in to buy");
       return;
     }
     const payload = {
@@ -123,7 +151,7 @@ const ProductDetail = () => {
 
     //navigate("/cart");
     dispatch(calculateTotal(cartItems));
-    toast.success("Item added to cart successfully");
+    navigate("/billing");
   };
 
   const handleInstallment = () => {
@@ -241,9 +269,9 @@ const ProductDetail = () => {
             </span>
           </div>
           {/* <PaystackButton {...componentProps} className="text-white sm:w-full lg:w-[90%] bg-[#009999] flex rounded-lg py-3 justify-center items-center w-[90%]" /> */}
-          {/* <button onClick={handlePay} className="text-white sm:w-full lg:w-[90%] bg-[#009999] flex rounded-lg py-3 justify-center items-center w-[90%]">
+          <button onClick={handlePay} className="text-white sm:w-full lg:w-[90%] bg-[#009999] flex rounded-lg py-3 justify-center items-center w-[90%]">
             Buy now
-          </button> */}
+          </button>
           <button onClick={handleInstallment} className="bg-white sm:w-full lg:w-[90%] border-[#009999] py-3  rounded-lg border flex justify-center items-center w-[90%]">
             Buy on installment
           </button>

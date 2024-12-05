@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { GetUsersSuccess } from "Redux/Actions/ActionCreators";
 import { useForm } from "react-hook-form";
+import { sendEmailVerification } from "firebase/auth";
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,6 +31,7 @@ const SignUp = () => {
       name: e.name,
       email: e.email,
       type: "Customer",
+      phone: e.phone,
     };
 
     await userRegistration(e.email, e.password)
@@ -37,11 +39,18 @@ const SignUp = () => {
         const { uid } = res.user;
         console.log(uid);
         await saveData(res.user.uid, { userId: res.user.uid, ...form })
-          .then((res) => {
-            dispatch(GetUsersSuccess(uid));
-            toast.success("Successful Registration");
-            reset();
-            navigate("/");
+          .then((res2) => {
+            sendEmailVerification(res.user)
+              .then(() => {
+                dispatch(GetUsersSuccess(uid));
+                toast.success("Successful Registration!!! Please verify your email address");
+                reset();
+                navigate("/");
+              })
+              .catch((err) => {
+                console.log(err);
+                toast.error(err.code);
+              });
           })
           .catch((err) => {
             console.log(err);
@@ -108,6 +117,19 @@ const SignUp = () => {
                 {...register("email", { required: "Email Address is required" })}
               />
               {errors.email && <span className="font-small text-[#FF0000]">{errors.email.message}</span>}
+            </div>
+            <div className="form-group space-y-3 w-full">
+              <label className="block font-semibold text-zinc-800" htmlFor="email">
+                Phone
+              </label>
+              <input
+                className="block form__input input-field border border-black  rounded-md focus:outline-none w-full  h-10 sm:h-11 px-4"
+                type="text"
+                placeholder="Enter your Phone"
+                name="phone"
+                {...register("phone", { required: "Phone is required" })}
+              />
+              {errors.phone && <span className="font-small text-[#FF0000]">{errors.phone.message}</span>}
             </div>
             <div className="form-group space-y-3 w-full">
               <label className="block font-semibold text-zinc-800" htmlFor="password">

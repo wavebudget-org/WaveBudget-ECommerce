@@ -16,26 +16,18 @@ const ItemCategories = () => {
 
   const slides = [
     {
-      image: "https://imagetolink.com/ib/SAL0SODI9t.jpg",
+      image: "https://res.cloudinary.com/temfad/image/upload/v1733417404/WhatsApp_Image_2024-12-02_at_18.17.10_tdky1n.jpg",
       title: <SliderText />,
     },
     {
-      image: "https://imagetolink.com/ib/BP5pVO6PSa.jpg",
+      image: "https://res.cloudinary.com/temfad/image/upload/v1733417404/WhatsApp_Image_2024-12-02_at_18.17.10_tdky1n.jpg",
       title: <SliderText1 />,
     },
     {
-      image: "https://imagetolink.com/ib/QXWtuE0DSM.jpg",
+      image: "https://res.cloudinary.com/temfad/image/upload/v1733417404/WhatsApp_Image_2024-12-02_at_18.17.10_tdky1n.jpg",
       title: <SliderText />,
     },
   ];
-
-  const divStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundSize: "cover",
-    height: "450px",
-  };
 
   return (
     <div className="max-[1000px]:hidden gap-6 grid grid-cols-6 bg-white rounded-md p-4">
@@ -186,10 +178,9 @@ const ItemCategories = () => {
       <div className="bg-[#009999] bg-opacity-25 overflow-hidden mix-blend-multiply w-full h-full col-span-5 rounded-md">
         <Slide>
           {slides.map((slideImage, index) => (
-            <div key={index}>
-              <div style={{ ...divStyle, backgroundImage: `url(${slideImage.image})` }}>
-                <div>{slideImage.title}</div>
-              </div>
+            <div key={index} className="w-full">
+              <img src={slideImage.image} alt="" className="w-full h-full object-cover" />
+              {/* <div style={{ ...divStyle, backgroundImage: `url(${slideImage.image})` }}></div> */}
             </div>
           ))}
         </Slide>

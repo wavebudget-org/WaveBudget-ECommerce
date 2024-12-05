@@ -10,12 +10,12 @@ import MobileNav from "components/mobilenav/mobileNav";
 import HidHeader from "./minors/headers/hidHeader";
 import ItemCategories from "./minors/categories/itemCategories";
 import MobileCategories from "./minors/categories/mobileCategories";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getAll } from "firebasedatas/getProducts";
 import MobileSearch from "./minors/headers/mobsearch";
 const HomePage = () => {
-  const { items } = useSelector((state) => state.items);
-  const [newArrival, setNewarrival] = useState();
+  // const { items } = useSelector((state) => state.items);
+  const [newArrival, setNewarrival] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const dispatch = useDispatch();
   const [product, setProduct] = useState();
@@ -27,7 +27,7 @@ const HomePage = () => {
         .then((res) => {
           const currentTime = new Date().getTime();
           setProduct(res);
-          const filter = res?.filter((val) => val.createdAt?.integerValue > currentTime - 604800000);
+          const filter = res?.filter((val) => val.createdAt > currentTime - 604800000);
           const arr = filter.sort(function (a, b) {
             return a.createdAt - b.createdAt;
           });
@@ -40,16 +40,16 @@ const HomePage = () => {
     getData();
   }, [dispatch]);
 
-  useEffect(() => {
-    const currentTime = new Date().getTime();
-    if (items) {
-      const filter = items?.filter((val) => val.createdAt?.integerValue > currentTime - 604800000);
-      const arr = filter.sort(function (a, b) {
-        return a.createdAt - b.createdAt;
-      });
-      setNewarrival(arr);
-    }
-  }, [items]);
+  // useEffect(() => {
+  //   const currentTime = new Date().getTime();
+  //   if (items) {
+  //     const filter = items?.filter((val) => val.createdAt > currentTime - 604800000);
+  //     const arr = filter.sort(function (a, b) {
+  //       return a.createdAt - b.createdAt;
+  //     });
+  //     setNewarrival(arr);
+  //   }
+  // }, [items]);
 
   return (
     <div className="w-full h-full pb-[40px] min-[450px]:pb-0 overflow-y-auto">

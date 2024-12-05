@@ -77,8 +77,7 @@ const GroupWidget = ({ heading, payload }) => {
           <img src={foward} alt="foward" />
         </div>
         <div ref={slide} className="overflow_auto_wrapper">
-          {payload?.slice(0, 10).map(({ name, description, id, images, price }, idx) => {
-            console.log(name);
+          {payload?.slice(0, 10).map(({ name, description, id, image, price }, idx) => {
             return (
               <div
                 className="groupWidget_album_item"
@@ -86,7 +85,7 @@ const GroupWidget = ({ heading, payload }) => {
                   navigate(`/product/${id}`);
                 }}
                 key={idx + 1}>
-                <ScrollWidget name={name.stringValue} image={images[0]} id={id} descriptions={description.stringValue} price={price.stringValue} />
+                <ScrollWidget name={name} image={image.values[0].mapValue.fields.url.stringValue} id={id} descriptions={description} price={price} />
               </div>
             );
           })}

@@ -60,7 +60,14 @@ const Search = ({ setIsVisible }) => {
             id="text"
             className="w-full h-full rounded-3xl px-8 outline-none"
           />
-          <div className="absolute px-2 h-full flex top-0 rounded-3xl space-x-2 justify-center items-center right-0 bg-[#009999] text-white ">
+          <div
+            className="absolute px-2 h-full flex top-0 rounded-3xl space-x-2 justify-center items-center right-0 bg-[#009999] text-white "
+            onClick={() => {
+              if (searchText.trim()) {
+                // Navigate to the search URL with query parameters
+                navigate(`/catalog/?q=${encodeURIComponent(searchText)}`);
+              }
+            }}>
             <IoIosSearch />
             <span>Search</span>
           </div>

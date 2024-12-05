@@ -24,6 +24,9 @@ import InitiatePay from "components/payment-gateway/Initiate-Pay";
 import MerchantOrders from "components/merchants/orders";
 import SingleOrder from "components/merchants/singleOrder";
 import AdminOrders from "components/admin/orders";
+import Forgot from "components/authentication/forgot/forgot";
+import Catalog from "components/catalog/catalog";
+import Billing from "components/payment-gateway/billing";
 
 export {
   HomePage,
@@ -52,4 +55,7 @@ export {
   MerchantOrders,
   SingleOrder,
   AdminOrders,
+  Forgot,
+  Catalog,
+  Billing,
 };

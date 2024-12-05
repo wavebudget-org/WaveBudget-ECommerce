@@ -29,32 +29,37 @@ const SignIn = () => {
     await userlogin(e.email, e.password)
       .then(async (res) => {
         const { uid } = res.user;
-        await getUserData(customersId, sellersId)
-          .then(async (res) => {
-            const { customersId, sellersId } = res;
-            if (customersId && customersId.includes(uid)) {
-              navigate(-1);
-              dispatch(GetUsersSuccess(uid));
-            }
-            if (sellersId && sellersId.includes(uid)) {
-              await getExistingDoc(uid)
-                .then((res) => {
-                  if (res.key) {
-                    navigate(`/seller/store/${res.key}`);
-                    dispatch(GetUsersSuccess(uid));
-                  } else {
-                    navigate("/seller/not-activated");
-                  }
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        setLoading(false);
+        if (res.user.emailVerified === true) {
+          await getUserData(customersId, sellersId)
+            .then(async (res) => {
+              const { customersId, sellersId } = res;
+              if (customersId && customersId.includes(uid)) {
+                navigate(-1);
+                dispatch(GetUsersSuccess(uid));
+              }
+              if (sellersId && sellersId.includes(uid)) {
+                await getExistingDoc(uid)
+                  .then((res) => {
+                    if (res.key) {
+                      navigate(`/seller/store/${res.key}`);
+                      dispatch(GetUsersSuccess(uid));
+                    } else {
+                      navigate("/seller/not-activated");
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          setLoading(false);
+        } else {
+          toast.error("Email not yet verified");
+          setLoading(false);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -125,6 +130,14 @@ const SignIn = () => {
               </div>
               {errors.password && <span className="font-small text-[#FF0000]">{errors.password.message}</span>}
             </div>
+            <span className="text-right  w-full">
+              <span
+                onClick={() => {
+                  navigate("/forgot");
+                }}>
+                Forgot Password?
+              </span>
+            </span>
 
             <button type="submit" className="bg-[#009999] text-white sm:py-3 py-2 rounded-md flex items-center w-full justify-center">
               {loading ? <Loader /> : <span>Log in</span>}

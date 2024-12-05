@@ -52,6 +52,7 @@ const Header = () => {
       </div>
 
       <div className=" cursor-pointer flex items-center sm:space-x-4 space-x-2">
+        <p>Contact Us</p>
         <div
           onClick={() => {
             handleMobileSignin();

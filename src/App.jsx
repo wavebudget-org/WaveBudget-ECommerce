@@ -28,6 +28,9 @@ import {
   MerchantOrders,
   SingleOrder,
   AdminOrders,
+  Forgot,
+  Catalog,
+  Billing,
 } from "Pages";
 
 import Scrolltotop from "components/UI/ScrollToTop";
@@ -65,11 +68,14 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgot" element={<Forgot />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<UserCart />} />
+          <Route path="/billing" element={<Billing />} />
           <Route path="/product/payment-gateway/:id" element={<PaymentGateway />} />
           <Route path="/cart/initiate-payment/" element={<InitiatePay />} />
           <Route path="/detail" element={<DetailPage />} />
+          <Route path="/catalog/" element={<Catalog />} />
           <Route path="/seller/activate-account" element={<ActivationCard />} />
           <Route path="/seller/not-activated" element={<AwaitActivation />} />
           <Route path="/seller/register" element={<MerchantSignUp />} />
