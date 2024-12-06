@@ -43,20 +43,7 @@ export const saveData = async (id, payload) => {
       type: "Merchant",
     });
   } else {
-    return setDoc(userRef, {
-      email: payload.email,
-      userId: id,
-      phoneNumber: payload.phoneNumber,
-      acctname: payload.acctname,
-      acctnumber: payload.acctnumber,
-      bankname: payload.bankname,
-      store: payload.store,
-      address: payload.address,
-      businessType: payload.businessType,
-      cac: "",
-      businessDescription: payload.businessDescription,
-      type: "Merchant",
-    });
+    return setDoc(userRef, payload);
   }
 };
 
