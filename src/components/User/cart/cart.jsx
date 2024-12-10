@@ -11,6 +11,7 @@ const UserCart = () => {
   const isShow = false;
   const { cartItems, overallPrice } = useSelector((state) => state.cart);
   const navigate = useNavigate();
+  console.log(cartItems);
   //console.log(name, description, price.)
 
   return (

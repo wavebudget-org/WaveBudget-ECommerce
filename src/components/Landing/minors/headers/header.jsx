@@ -1,12 +1,14 @@
+/* eslint-disable no-useless-concat */
 import React, { useState, useEffect } from "react";
 import logo from "../../../../assets/images/waveb.png";
 import "../../../../index.css";
-import { FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaPhoneAlt, FaShoppingCart, FaUser } from "react-icons/fa";
 import AuthCard from "../authcard/authcard";
 import CartCard from "../minicartcard/miniCard";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getExistingDoc } from "firebasedatas/firebaseAuth";
+import { FaWhatsapp } from "react-icons/fa";
 const Header = () => {
   const { numOfCartItems } = useSelector((state) => state.cart);
   const [isVisible, setisVisisble] = useState(false);
@@ -35,6 +37,12 @@ const Header = () => {
   const handleMobileSignin = () => {
     navigate("/userinfo");
   };
+
+  function Rdelivery() {
+    const url = "https://wa.me/2348137960202?text=" + "   I want to know more about WaveBudget";
+
+    window.open(url, "blank").focus();
+  }
   return (
     <div className="bg-white w-full cursor-pointer p-2 min-[450px]:py-3 min-[450px]:px-5 shadow-lg flex justify-between items-center border-b">
       <div
@@ -52,7 +60,15 @@ const Header = () => {
       </div>
 
       <div className=" cursor-pointer flex items-center sm:space-x-4 space-x-2">
-        <p>Contact Us</p>
+        <p>Contact Us Via </p>
+        <div className="flex items-center gap-1 cursor-pointer">
+          <FaPhoneAlt className="text-[black] text-2xl" />
+          <p>08137960202</p>
+        </div>
+        <div className="flex items-center gap-1 cursor-pointer" onClick={Rdelivery}>
+          <FaWhatsapp className="text-[green] text-2xl" />
+          <p>08137960202</p>
+        </div>
         <div
           onClick={() => {
             handleMobileSignin();

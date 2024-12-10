@@ -2828,14 +2828,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@paystack/inline-js@npm:^2.12.6":
-  version: 2.12.6
-  resolution: "@paystack/inline-js@npm:2.12.6"
-  checksum: 37e39cf065e817ad922a13c21aa5374173a47a6f12d499fe7add2da36fdca9e0f81033bf57661ba6ca4f06f7840af436dbed0791eaa2a340abbe7f803fc6167c
-  languageName: node
-  linkType: hard
-
-"@paystack/inline-js@npm:^2.19.2":
+"@paystack/inline-js@npm:^2.19.2, @paystack/inline-js@npm:^2.22.1":
   version: 2.22.1
   resolution: "@paystack/inline-js@npm:2.22.1"
   checksum: 29ece2aaffc9b1d6b855f18d7a92d634bfd20b54324f0584a50bc74d0a0c7b7ef59cf7f85db7b52af690a0527bfb1095995355d4627dd3235674dbee1b397914
@@ -4140,7 +4133,7 @@ __metadata:
   dependencies:
     "@cloudinary/react": ^1.13.0
     "@cloudinary/url-gen": ^1.21.0
-    "@paystack/inline-js": ^2.12.6
+    "@paystack/inline-js": ^2.22.1
     "@react-google-maps/api": ^2.17.1
     "@reduxjs/toolkit": ^1.9.3
     "@testing-library/jest-dom": ^5.16.5

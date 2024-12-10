@@ -143,10 +143,9 @@
 //   };
 
 //   /**
-//    * 
-//    * 
+//    *
+//    *
 
-  
 //    */
 
 //   useEffect(() => {
@@ -209,7 +208,7 @@
 //       "Store:   " +
 //       storeName +
 //       "%0a" +
-//       'Product link:  ' + `https://wavebudget.vercel.app/${id}` + '%0a';
+//       'Product link:  ' + `https://wave-budget-ecommerce.netlify.app/${id}` + '%0a';
 
 //     window.open(url, "blank").focus();
 //   };
@@ -241,7 +240,6 @@
 // }
 
 // export default PaymentGateway;
-
 
 import React, { useState, useEffect } from "react";
 import pxl from "../../assets/images/pxl.jpg";
@@ -366,7 +364,7 @@ const PaymentGateway = () => {
       price: parseInt(price),
       image: images[0],
       storeName,
-      userId:currentUser,
+      userId: currentUser,
       curPrice,
       count,
     };
@@ -377,13 +375,13 @@ const PaymentGateway = () => {
     toast.success("Item added to cart successfully");
   };
 
-  const handlePay =  () => {
+  const handlePay = () => {
     if (!currentUser) {
       toast.error("You must be logged in to buy");
       return;
     }
     // await HandlePayment(email, parseFloat(curPrice), dispatch);
-    navigate(`/product/payment-gateway/${id}`)
+    navigate(`/product/payment-gateway/${id}`);
   };
 
   /**
@@ -407,7 +405,7 @@ const PaymentGateway = () => {
 
         setTransHistory([payload]);
 
-        await saveHistory( {
+        await saveHistory({
           type: "no-checkout",
           date: `${day} ${month} ${year}`,
           time: `${timeFormat(hours, minutes, seconds, amPm)}`,
@@ -453,26 +451,28 @@ const PaymentGateway = () => {
       "Store:   " +
       storeName +
       "%0a" +
-      'Product link:  ' + `https://wavebudget.vercel.app/${id}` + '%0a';
+      "Product link:  " +
+      `https://wave-budget-ecommerce.netlify.app/${id}` +
+      "%0a";
 
     window.open(url, "blank").focus();
   };
 
   const handleShareReciept = () => {
-    navigate("https://wa.me/+2348137960202")
-  }
+    navigate("https://wa.me/+2348137960202");
+  };
 
   return (
     <div className="w-full min-h-screen bg-[#0b8e8e] flex flex-col items-center justify-center ">
-      <div className='w-28 h-28 rounded-full bg-white flex items-center justify-center my-10'>
-        <img src="/waveb.png" alt="wavebudget-logo" className='w-10 h-10' />
+      <div className="w-28 h-28 rounded-full bg-white flex items-center justify-center my-10">
+        <img src="/waveb.png" alt="wavebudget-logo" className="w-10 h-10" />
       </div>
       <h1 className="text-white font-bold text-center text-4xl mb-8">Payment Gateway</h1>
       <div className="mb-[1rem] w-full max-w-[850px] bg-white px-2 py-16 gap-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <div className="w-full min-[450px]:mt-0 mt-[35px] mx-auto">
           <div className="w-[93%] mx-auto flex flex-col cursor-pointer sm:row-span-2">
             <div className="w-full rounded-sm">
-              <div className='bg-white overflow-hidden'>
+              <div className="bg-white overflow-hidden">
                 <img src="/transfer.png" alt="transfer-logo" />
               </div>
             </div>
@@ -503,19 +503,24 @@ const PaymentGateway = () => {
               <b>{`₦${parseInt(price) || 0}`}</b>
             </span>
           </div>
-          <button
-            onClick={handlePay}
-            className="text-white sm:w-full lg:w-full bg-[#009999] flex rounded-lg py-3 justify-center items-center w-[90%]"
-          >
+          <button onClick={handlePay} className="text-white sm:w-full lg:w-full bg-[#009999] flex rounded-lg py-3 justify-center items-center w-[90%]">
             Share payment receipt
           </button>
         </div>
         <div className="flex flex-col justify-start space-y-[5%] text-zinc-800">
           <h1 className="text-2xl font-bold text-[#0b8e8e]">Bank Details</h1>
-          <p className='font-bold text-[#0B8E8E] my-4'>Notice: <span className='font-normal'>To complete order make a transfer to the account below.</span></p>
-          <p className='font-bold text-[#0B8E8E] my-4'>Account Name: <span className='font-normal'>Wavebudget-FinTech</span></p>
-          <p className='font-bold text-[#0B8E8E] my-4'>Account Number: <span className='font-normal'>1234567890</span></p>
-          <p className='font-bold text-[#0B8E8E] my-4'>Bank Name: <span className='font-normal'>Wavebudget Bank</span></p>
+          <p className="font-bold text-[#0B8E8E] my-4">
+            Notice: <span className="font-normal">To complete order make a transfer to the account below.</span>
+          </p>
+          <p className="font-bold text-[#0B8E8E] my-4">
+            Account Name: <span className="font-normal">Wavebudget-FinTech</span>
+          </p>
+          <p className="font-bold text-[#0B8E8E] my-4">
+            Account Number: <span className="font-normal">1234567890</span>
+          </p>
+          <p className="font-bold text-[#0B8E8E] my-4">
+            Bank Name: <span className="font-normal">Wavebudget Bank</span>
+          </p>
         </div>
       </div>
     </div>

@@ -180,7 +180,7 @@ const ProductDetail = () => {
       storeName +
       "%0a" +
       "Product link:  " +
-      `https://wavebudget.vercel.app/${id}` +
+      `https://wave-budget-ecommerce.netlify.app/${id}` +
       "%0a";
 
     window.open(url, "blank").focus();
@@ -311,7 +311,7 @@ const ProductDetail = () => {
         count={count}
         store={storeName}
         curPrice={parseFloat(curPrice)}
-        plink={`https://wavebudget.vercel.app/${id}`}
+        plink={`https://wave-budget-ecommerce.netlify.app/${id}`}
       /> */}
     </div>
   );

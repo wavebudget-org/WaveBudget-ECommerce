@@ -2,37 +2,92 @@ import React, { useState } from "react";
 import "./landingWidget.scss";
 import { toast } from "react-hot-toast";
 import { CiShare2 } from "react-icons/ci";
+import { FaShoppingCart } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 import copy from "copy-to-clipboard";
-const LandingWidget = ({ name, descriptions, image, id, price }) => {
+import { formatter } from "Utils/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { calculateTotal, itemsToCart } from "Redux/Actions/ActionCreators";
+import { useNavigate } from "react-router-dom";
+const LandingWidget = ({ name, descriptions, image, id, price, merchantId, category, qty, storeName, images }) => {
   const [link, setLink] = useState();
   const [isShare, setisShare] = useState(false);
+  const dispatch = useDispatch();
+  const { cartItems } = useSelector((state) => state.cart);
+  const { currentUser } = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
+
+  const addToCart = () => {
+    // if (!currentUser) {
+    //   toast.error("You must be logged in to add to cart");
+    //   return;
+    // }
+    const { values } = images;
+    let cartImages = [];
+    values.forEach(({ mapValue }, index) => {
+      const { fields } = mapValue;
+      cartImages.push({
+        url: fields.url.stringValue,
+        id: fields.id.stringValue,
+      });
+    });
+    const payload = {
+      name: name,
+      price: parseInt(price),
+      image: { url: image },
+      images: cartImages,
+      description: descriptions,
+      storeName,
+      userId: currentUser,
+      curPrice: price,
+      qty,
+      category,
+      merchantId,
+      count: 1,
+      productId: id,
+    };
+    dispatch(itemsToCart(payload, cartItems));
+
+    //navigate("/cart");
+    dispatch(calculateTotal(cartItems));
+    toast.success("Item added to cart successfully");
+  };
 
   return (
     <>
       <div className=" pb-2 group w-[160px] flex flex-col space-y-2 overflow-hidden h-fit ld_widget bg-white rounded-md sm:rounded-lg">
-        <div className="w-full h-full cursor-pointer duration-300">
+        <div className="w-full h-full duration-300">
           <div className="relative w-full h-[140px] img_sz overflow-hidden">
             <img className="h-full w-full object-cover min-[450px]:object-fill transform duration-200 group-hover:scale-105" src={image} alt="" />
             <div
               onClick={(e) => {
                 e.stopPropagation();
-                setLink(`https://wavebudget.vercel.app/product/${id}`);
+                setLink(`https://wave-budget-ecommerce.netlify.app/product/${id}`);
                 setisShare(!isShare);
               }}
               className="absolute top-2 right-2 bg-black text-white p-1 rounded-full">
               <CiShare2 className="text-[14px] min-[450px]:text-[20px]" />
             </div>
           </div>
-          <div className="mt-2 px-2 min-[450px]:space-y-2 space-y-1 text-sm sm:text-[15px]">
-            <p className="truncate  w-[100vw] text-zinc-700 sm:pr-[10%]">
-              <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[150px] min-[450px]:w-[190px]">{name}</span>
-            </p>
-            <p className="truncate w-[98vw] text-zinc-700 font-thin sm:pr-[10%] flex flex-wrap overflow-hidden">
-              <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[150px] min-[450px]:w-[190px]">{descriptions}</span>
-            </p>
+          <div className="flex w-full justify-between items-center">
+            <div className="w-3/4">
+              <div
+                className="mt-2 px-2 min-[450px]:space-y-2 space-y-1 text-sm sm:text-[15px] cursor-pointer"
+                onClick={() => {
+                  navigate(`/product/${id}`);
+                }}>
+                <p className="truncate  w-[100vw] text-zinc-700 sm:pr-[10%]">
+                  <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[150px] min-[450px]:w-[190px]">{name}</span>
+                </p>
+                <p className="truncate w-[98vw] text-zinc-700 font-thin sm:pr-[10%] flex flex-wrap overflow-hidden">
+                  <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[150px] min-[450px]:w-[190px]">{descriptions}</span>
+                </p>
+              </div>
+              <div className="mt-2 min-[450px]:mt-5 px-2 text-[15px] font-medium sm:font-semibold text-zinc-700"> {formatter.format(price)}</div>
+            </div>
+            <FaShoppingCart className=" min-[450px]:block hover:text-[#009999] mr-2" onClick={addToCart} />
           </div>
-          <div className="mt-2 min-[450px]:mt-5 px-2 text-[15px] font-medium sm:font-semibold text-zinc-700"> {`₦${price}`}</div>
         </div>
       </div>
       <div
