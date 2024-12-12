@@ -34,7 +34,9 @@ const Search = ({ setIsVisible }) => {
   // }
 
   function Lservices() {
-    const url = "https://wa.me/2348137960202?text=" + "  I want to know how i can shop to earn ";
+    const url =
+      "https://chat.whatsapp.com/GUDhGNfC2mYGu9qvTiuoQV" +
+      "Earn more than #100,000 monthly. share our bestselling quality and affordable products to your loved ones and earn instant commition when they buy through you. click here to join our agent group for updates:";
 
     window.open(url, "blank").focus();
   }
@@ -75,7 +77,7 @@ const Search = ({ setIsVisible }) => {
         <div className="cursor-pointer absolute min-[450px]:w-[97vw] lg:w-[88vw] h-20 shadow-lg bottom-[-48px] rounded-xl bg-white grid grid-cols-3 px-2">
           <div onClick={Lservices} className="flex items-center justify-center min-[450px]:space-x-2 md:space-x-3 text-sm md:text-[15px] h-full">
             <GiTakeMyMoney className="text-[#009999] min-[450px]:text-[30px] md:text-[40px]" />
-            <p className="font-semibold hover:text-[#009999]">Shop to Earn</p>
+            <p className="font-semibold hover:text-[#009999]">Earn from Shoppers</p>
           </div>
           <div
             onClick={() => {

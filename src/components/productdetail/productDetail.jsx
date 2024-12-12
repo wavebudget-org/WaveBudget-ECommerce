@@ -130,6 +130,7 @@ const ProductDetail = () => {
   const handlePay = () => {
     if (!currentUser) {
       toast.error("You must be logged in to buy");
+      navigate("/signin");
       return;
     }
     const payload = {
@@ -149,14 +150,14 @@ const ProductDetail = () => {
     };
     dispatch(itemsToCart(payload, cartItems));
 
-    //navigate("/cart");
     dispatch(calculateTotal(cartItems));
-    navigate("/billing");
+    navigate("/cart");
   };
 
   const handleInstallment = () => {
     if (!currentUser) {
       toast.error("You must be logged in to buy");
+      navigate("/signin");
       return;
     }
     const url =
@@ -226,15 +227,15 @@ const ProductDetail = () => {
           </div>
 
           <div className="capitalize border-b p-2 w-full grid grid-cols-2 gap-[3.5rem] items-center">
-            <span>Outright price:</span>
-            <span>
-              <b>{formatter.format(parseInt(price)) || formatter.format(0)}</b>
-            </span>
-          </div>
-          <div className="capitalize border-b p-2 w-full grid grid-cols-2 gap-[3.5rem] items-center">
             <span> BNPL price:</span>
             <span>
               <b>{formatter.format(parseInt(price) + parseInt(price * 0.1)) || formatter.format(0)}</b>
+            </span>
+          </div>
+          <div className="capitalize border-b p-2 w-full grid grid-cols-2 gap-[3.5rem] items-center">
+            <span>Outright price:</span>
+            <span>
+              <b>{formatter.format(parseInt(price)) || formatter.format(0)}</b>
             </span>
           </div>
           <div className="capitalize border-b p-2 w-full grid grid-cols-2 gap-[3.5rem] items-center">
@@ -257,15 +258,15 @@ const ProductDetail = () => {
 
         <div className="flex flex-col justify-center items-center space-y-[3%] p-2 min-[450px]:p-4">
           <div className=" flex w-[90%] sm:w-full lg:w-[90%] justify-between items-center p-2">
-            <span>Outright price:</span>{" "}
-            <span>
-              <b>{formatter.format(curPrice) || formatter.format(0)}</b>
-            </span>
-          </div>
-          <div className=" flex w-[90%] sm:w-full lg:w-[90%] justify-between items-center p-2">
             <span>Installment price:</span>{" "}
             <span>
               <b>{formatter.format(curBNPL) || formatter.format(0)}</b>
+            </span>
+          </div>
+          <div className=" flex w-[90%] sm:w-full lg:w-[90%] justify-between items-center p-2">
+            <span>Outright price:</span>{" "}
+            <span>
+              <b>{formatter.format(curPrice) || formatter.format(0)}</b>
             </span>
           </div>
           {/* <PaystackButton {...componentProps} className="text-white sm:w-full lg:w-[90%] bg-[#009999] flex rounded-lg py-3 justify-center items-center w-[90%]" /> */}

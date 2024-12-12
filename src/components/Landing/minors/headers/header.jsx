@@ -60,12 +60,12 @@ const Header = () => {
       </div>
 
       <div className=" cursor-pointer flex items-center sm:space-x-4 space-x-2">
-        <p>Contact Us Via </p>
-        <div className="flex items-center gap-1 cursor-pointer">
+        <p className="hidden md:block">Contact Us Via </p>
+        <div className=" items-center gap-1 cursor-pointer hidden md:flex">
           <FaPhoneAlt className="text-[black] text-2xl" />
           <p>08137960202</p>
         </div>
-        <div className="flex items-center gap-1 cursor-pointer" onClick={Rdelivery}>
+        <div className=" items-center gap-1 cursor-pointer hidden md:flex" onClick={Rdelivery}>
           <FaWhatsapp className="text-[green] text-2xl" />
           <p>08137960202</p>
         </div>
