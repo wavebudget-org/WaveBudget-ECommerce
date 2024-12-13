@@ -10,7 +10,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { itemsToCart, calculateTotal } from "Redux/Actions/ActionCreators";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import { getExistingDoc } from "firebasedatas/firebaseAuth";
 import { getExistingProduct } from "firebasedatas/getExisting";
 import { formatter } from "Utils/helpers";
 const ProductDetail = () => {
@@ -19,7 +18,6 @@ const ProductDetail = () => {
   //const { state } = useLocation();
   //const { name, description, price, qty, storeName, images } = state;
   const { cartItems } = useSelector((state) => state.cart);
-  const [username, setUsername] = useState();
   const [name, setname] = useState();
   const [description, setdescription] = useState();
   const [qty, setQty] = useState();
@@ -27,7 +25,6 @@ const ProductDetail = () => {
   const [merchantId, setMerchantId] = useState();
   const [category, setCategory] = useState();
   const [images, setImages] = useState();
-  const [email, setEmail] = useState();
   const isVisible = true;
   const { currentUser } = useSelector((state) => state.user);
   const [isSlider, setisSlider] = useState(false);
@@ -39,21 +36,6 @@ const ProductDetail = () => {
   const [count, setCount] = useState(1);
   const [bnpl, setbnpl] = useState();
   //console.log(name, description, price.)
-  useEffect(() => {
-    if (!currentUser) return;
-    async function getUser() {
-      await getExistingDoc(currentUser)
-        .then((res) => {
-          setUsername(res.name);
-          setEmail(res.email);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    getUser();
-  }, [currentUser]);
 
   useEffect(() => {
     if (!id) return;
@@ -162,28 +144,12 @@ const ProductDetail = () => {
     }
     const url =
       "https://wa.me/2348137960202?text=" +
-      "Username: " +
-      username +
-      "%0a" +
-      "Email:   " +
-      email +
-      "%0a" +
-      "Product Name:   " +
+      "Hi, I will like to buy" +
       name +
-      "%0a" +
-      "Quantity:   " +
-      count +
-      "%0a" +
-      "Price:   " +
-      curBNPL +
-      "%0a" +
-      "Store:   " +
-      storeName +
-      "%0a" +
-      "Product link:  " +
-      `https://wave-budget-ecommerce.netlify.app/${id}` +
-      "%0a";
-
+      "on instalment, my location is (insert location), and i will like it to be deliverd to me on (insert date)";
+    // "Product link:  " +
+    // `https://wave-budget-ecommerce.netlify.app/${id}` +
+    // "%0a"
     window.open(url, "blank").focus();
   };
 
@@ -258,13 +224,13 @@ const ProductDetail = () => {
 
         <div className="flex flex-col justify-center items-center space-y-[3%] p-2 min-[450px]:p-4">
           <div className=" flex w-[90%] sm:w-full lg:w-[90%] justify-between items-center p-2">
-            <span>Installment price:</span>{" "}
+            <span>5 month installment plan:</span>{" "}
             <span>
               <b>{formatter.format(curBNPL) || formatter.format(0)}</b>
             </span>
           </div>
           <div className=" flex w-[90%] sm:w-full lg:w-[90%] justify-between items-center p-2">
-            <span>Outright price:</span>{" "}
+            <span>Pay in full ( discounted price):</span>
             <span>
               <b>{formatter.format(curPrice) || formatter.format(0)}</b>
             </span>

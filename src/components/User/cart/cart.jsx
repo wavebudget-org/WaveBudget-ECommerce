@@ -7,12 +7,12 @@ import { useSelector } from "react-redux";
 import CartCards from "./cartCard";
 import { useNavigate } from "react-router-dom";
 import { formatter } from "Utils/helpers";
+import toast from "react-hot-toast";
 const UserCart = () => {
   const isShow = false;
   const { cartItems, overallPrice } = useSelector((state) => state.cart);
+  const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  console.log(cartItems);
-  //console.log(name, description, price.)
 
   return (
     <div className="w-full h-full">
@@ -41,7 +41,16 @@ const UserCart = () => {
               <span className="">Total:</span>
               <span>{formatter.format(overallPrice)}</span>
             </div>
-            <button className="text-white py-2 bg-[#009999] rounded-2xl flex justify-center items-center w-full" onClick={() => navigate("/billing")}>
+            <button
+              className="text-white py-2 bg-[#009999] rounded-2xl flex justify-center items-center w-full"
+              onClick={() => {
+                if (!currentUser) {
+                  toast.error("You must be logged in to buy");
+                  navigate("/signin");
+                  return;
+                }
+                navigate("/billing");
+              }}>
               Checkout
             </button>
           </div>

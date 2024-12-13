@@ -35,7 +35,7 @@ const Search = ({ setIsVisible }) => {
 
   function Lservices() {
     const url =
-      "https://chat.whatsapp.com/GUDhGNfC2mYGu9qvTiuoQV" +
+      "https://wa.me/2348137960202?text=" +
       "Earn more than #100,000 monthly. share our bestselling quality and affordable products to your loved ones and earn instant commition when they buy through you. click here to join our agent group for updates:";
 
     window.open(url, "blank").focus();

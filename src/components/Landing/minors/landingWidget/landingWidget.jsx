@@ -60,15 +60,6 @@ const LandingWidget = ({ name, descriptions, image, id, price, merchantId, categ
         <div className="w-full h-full duration-300">
           <div className="relative w-full h-[140px] img_sz overflow-hidden">
             <img className="h-full w-full object-cover min-[450px]:object-fill transform duration-200 group-hover:scale-105" src={image} alt="" />
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                setLink(`https://wave-budget-ecommerce.netlify.app/product/${id}`);
-                setisShare(!isShare);
-              }}
-              className="absolute top-2 right-2 bg-black text-white p-1 rounded-full">
-              <CiShare2 className="text-[14px] min-[450px]:text-[20px]" />
-            </div>
           </div>
           <div className="flex w-full justify-between items-center">
             <div className="w-3/4">
@@ -86,7 +77,20 @@ const LandingWidget = ({ name, descriptions, image, id, price, merchantId, categ
               </div>
               <div className="mt-2 min-[450px]:mt-5 px-2 text-[15px] font-medium sm:font-semibold text-zinc-700"> {formatter.format(price)}</div>
             </div>
-            <FaShoppingCart className=" min-[450px]:block hover:text-[#009999] mr-2" onClick={addToCart} />
+            <div className="flex flex-col gap-4 mr-2">
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLink(`https://wave-budget-ecommerce.netlify.app/product/${id}`);
+                  setisShare(!isShare);
+                }}
+                className="bg-black text-white p-1 rounded-full cursor-pointer">
+                <CiShare2 className="text-[14px] min-[450px]:text-[20px]" />
+              </div>
+              <div onClick={addToCart} className="bg-black text-white p-1 rounded-full cursor-pointer">
+                <FaShoppingCart className="text-[10px] min-[450px]:text-[20px]" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

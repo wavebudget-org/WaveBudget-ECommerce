@@ -59,59 +59,63 @@ const Header = () => {
         </div>
       </div>
 
-      <div className=" cursor-pointer flex items-center sm:space-x-4 space-x-2">
-        <p className="hidden md:block">Contact Us Via </p>
-        <div className=" items-center gap-1 cursor-pointer hidden md:flex">
-          <FaPhoneAlt className="text-[black] text-2xl" />
-          <p>08137960202</p>
-        </div>
-        <div className=" items-center gap-1 cursor-pointer hidden md:flex" onClick={Rdelivery}>
-          <FaWhatsapp className="text-[green] text-2xl" />
-          <p>08137960202</p>
-        </div>
-        <div
-          onClick={() => {
-            handleMobileSignin();
-          }}
-          onMouseEnter={() => {
-            if (name) {
-              setisVisisble(false);
-              setisUser(true);
-            } else {
-              setisVisisble(true);
-              setisUser(false);
-            }
-          }}
-          onMouseLeave={() => {
-            setisVisisble(false);
-            setisUser(false);
-          }}
-          className="group relative flex text-black">
-          <div className="flex group-hover:text-[#009999] text-[16px] items-center space-x-2">
-            {name ? <span className="capitalize  text-sm">{name.split(" ")[0] || name}</span> : <span className="min-w-max text-sm">Sign in</span>}
-            <FaUser className=" " />
+      <div className="flex-col-reverse items-end md:flex-row cursor-pointer flex md:items-center sm:space-x-4 space-x-2">
+        <div className="flex space-x-2 items-center">
+          <p className="text-xs">Contact Us Via </p>
+          <div className=" items-center gap-1 cursor-pointer flex">
+            <FaPhoneAlt className="text-[black] text-sm md:text-2xl" />
+            <p className="text-xs">08137960202</p>
           </div>
-
-          <AuthCard isVisible={isVisible} isUser={isUser} isMobile={isMobile} setisMobile={setisMobile} />
+          <div className=" items-center gap-1 cursor-pointer flex" onClick={Rdelivery}>
+            <FaWhatsapp className="text-[green] text-sm md:text-2xl" />
+            <p className="text-xs">08137960202</p>
+          </div>
         </div>
-        <div
-          onClick={() => {
-            navigate("/cart");
-          }}
-          onMouseEnter={() => {
-            setisCart(true);
-          }}
-          onMouseLeave={() => {
-            setisCart(false);
-          }}
-          className="relative">
-          {numOfCartItems > 0 && (
-            <div className="hidden min-[450px]:flex absolute top-[-10px] right-[-10px] bg-[#009999] rounded-full px-2  text-[10px] text-white  items-center justify-center ">
-              <span>{numOfCartItems}</span>
+        <div className="flex space-x-2 sm:space-x-4 items-center">
+          <div
+            onClick={() => {
+              handleMobileSignin();
+            }}
+            onMouseEnter={() => {
+              if (name) {
+                setisVisisble(false);
+                setisUser(true);
+              } else {
+                setisVisisble(true);
+                setisUser(false);
+              }
+            }}
+            onMouseLeave={() => {
+              setisVisisble(false);
+              setisUser(false);
+            }}
+            className="group relative flex text-black">
+            <div className="flex group-hover:text-[#009999] text-[16px] items-center space-x-2">
+              {name ? <span className="capitalize  text-sm">{name.split(" ")[0] || name}</span> : <span className="min-w-max text-sm">Sign in</span>}
+              <FaUser className=" " />
             </div>
-          )}
-          <FaShoppingCart className="hidden min-[450px]:block hover:text-[#009999]" />
-          <CartCard isCart={isCart} name={name} items={numOfCartItems} />
+
+            <AuthCard isVisible={isVisible} isUser={isUser} isMobile={isMobile} setisMobile={setisMobile} />
+          </div>
+          <div
+            onClick={() => {
+              navigate("/cart");
+            }}
+            onMouseEnter={() => {
+              setisCart(true);
+            }}
+            onMouseLeave={() => {
+              setisCart(false);
+            }}
+            className="relative">
+            {numOfCartItems > 0 && (
+              <div className="hidden min-[450px]:flex absolute top-[-10px] right-[-10px] bg-[#009999] rounded-full px-2  text-[10px] text-white  items-center justify-center ">
+                <span>{numOfCartItems}</span>
+              </div>
+            )}
+            <FaShoppingCart className="hidden min-[450px]:block hover:text-[#009999]" />
+            <CartCard isCart={isCart} name={name} items={numOfCartItems} />
+          </div>
         </div>
       </div>
     </div>
