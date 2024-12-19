@@ -60,7 +60,7 @@ const AddProduct = ({ merchant, uid }) => {
             setValue("description", description);
             setValue("price", price);
             setValue("quantity", qty);
-            setselectedCat(category);
+            setValue("category", category);
             setImages(image);
           })
           .catch((err) => {
@@ -86,7 +86,7 @@ const AddProduct = ({ merchant, uid }) => {
       merchantId: uid,
       qty: e.quantity,
       image: images,
-      category: selectedCat,
+      category: e.category,
       price: e.price,
       id: itemId,
     };
@@ -132,7 +132,7 @@ const AddProduct = ({ merchant, uid }) => {
             </div>
           )}
 
-          <div className="flex flex-col space-y-2">
+          {/* <div className="flex flex-col space-y-2">
             <p className="text-sm text-[16px] font-medium">
               <span>Select Category</span>
             </p>
@@ -153,6 +153,17 @@ const AddProduct = ({ merchant, uid }) => {
                 );
               })}
             </div>
+          </div> */}
+          <div className="form-group space-y-3">
+            <label className="block form__label text-sm text-[16px] font-medium" htmlFor="">
+              <span> Category</span>
+            </label>
+            <select
+              className="block form__input input-field h-8 sm:h-11 px-2 border-zinc-700 rounded-md focus:outline-none text-zinc-700"
+              {...register("category", { required: "Category is required" })}>
+              <option value="">Select Category</option>
+            </select>
+            {errors.category && <span className="font-small text-[#FF0000]">{errors.category.message}</span>}
           </div>
           <div className="form-group space-y-3">
             <label className="block form__label text-sm text-[16px] font-medium" htmlFor="">

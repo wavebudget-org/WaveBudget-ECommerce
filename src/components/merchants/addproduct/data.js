@@ -7,7 +7,8 @@ export const categories = [
   { cats: "Drinks & Beverages" },
   { cats: "FoodStuffs" },
   { cats: "Fashion" },
+  { cats: "Furniture" },
   { cats: "Automobile" },
-  { cats: "Appliances" },
+  { cats: "Home Appliances" },
   { cats: "Baby Products" },
 ];

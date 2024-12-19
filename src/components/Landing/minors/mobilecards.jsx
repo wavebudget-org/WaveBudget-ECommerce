@@ -11,13 +11,15 @@ const MobileCards = () => {
   function Lservices() {
     const url =
       "https://chat.whatsapp.com/GUDhGNfC2mYGu9qvTiuoQV" +
-      "Earn more than #100,000 monthly. share our bestselling quality and affordable products to your loved ones and earn instant commition when they buy through you. click here to join our agent group for updates:";
+      "Earn more than # 100,000 monthly. share our bestselling quality and affordable products to your loved ones and earn instant commition when they buy through you. click here to join our agent group for updates:";
 
     window.open(url, "blank").focus();
   }
 
   function Rdelivery() {
-    const url = "https://wa.me/2348137960202?text=" + "   I want to know more about the delivery service and process ";
+    const url =
+      "https://wa.me/2348137960202?text=" +
+      "Hi, I will like to buy  (insert product name)  on instalment, my location is (insert locatio), and i will like it to be deliverd to me on (insert date) ";
 
     window.open(url, "blank").focus();
   }

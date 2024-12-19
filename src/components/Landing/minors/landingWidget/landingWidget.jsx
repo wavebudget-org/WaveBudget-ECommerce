@@ -61,34 +61,34 @@ const LandingWidget = ({ name, descriptions, image, id, price, merchantId, categ
           <div className="relative w-full h-[140px] img_sz overflow-hidden">
             <img className="h-full w-full object-cover min-[450px]:object-fill transform duration-200 group-hover:scale-105" src={image} alt="" />
           </div>
-          <div className="flex w-full justify-between items-center">
-            <div className="w-3/4">
-              <div
-                className="mt-2 px-2 min-[450px]:space-y-2 space-y-1 text-sm sm:text-[15px] cursor-pointer"
-                onClick={() => {
-                  navigate(`/product/${id}`);
-                }}>
-                <p className="truncate  w-[100vw] text-zinc-700 sm:pr-[10%]">
-                  <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[150px] min-[450px]:w-[190px]">{name}</span>
-                </p>
-                <p className="truncate w-[98vw] text-zinc-700 font-thin sm:pr-[10%] flex flex-wrap overflow-hidden">
-                  <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[150px] min-[450px]:w-[190px]">{descriptions}</span>
-                </p>
-              </div>
-              <div className="mt-2 min-[450px]:mt-5 px-2 text-[15px] font-medium sm:font-semibold text-zinc-700"> {formatter.format(price)}</div>
+          <div className="flex w-full flex-col justify-between ">
+            <div
+              className="mt-2 px-2 text-sm sm:text-[15px] cursor-pointer"
+              onClick={() => {
+                navigate(`/product/${id}`);
+              }}>
+              <p className="truncate   text-zinc-700 sm:pr-[10%]">
+                <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[150px] min-[450px]:w-[190px]">{name}</span>
+              </p>
+              <p className="truncate  text-zinc-700 font-thin sm:pr-[10%] flex flex-wrap overflow-hidden">
+                <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[150px] min-[450px]:w-[190px]">{descriptions}</span>
+              </p>
             </div>
-            <div className="flex flex-col gap-4 mr-2">
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setLink(`https://wave-budget-ecommerce.netlify.app/product/${id}`);
-                  setisShare(!isShare);
-                }}
-                className="bg-black text-white p-1 rounded-full cursor-pointer">
-                <CiShare2 className="text-[14px] min-[450px]:text-[20px]" />
-              </div>
-              <div onClick={addToCart} className="bg-black text-white p-1 rounded-full cursor-pointer">
-                <FaShoppingCart className="text-[10px] min-[450px]:text-[20px]" />
+            <div className="flex w-full justify-between items-center">
+              <div className="mt-2 min-[450px]:mt-5 px-2 text-[15px] font-medium sm:font-semibold text-zinc-700"> {formatter.format(price)}</div>
+              <div className="flex  gap-4 mr-2">
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLink(`https://wave-budget-ecommerce.netlify.app/product/${id}`);
+                    setisShare(!isShare);
+                  }}
+                  className="bg-black text-white p-1 rounded-full cursor-pointer">
+                  <CiShare2 className="text-[14px] min-[450px]:text-[20px]" />
+                </div>
+                <div onClick={addToCart} className="bg-black text-white p-1 rounded-full cursor-pointer">
+                  <FaShoppingCart className="text-[10px] min-[450px]:text-[20px]" />
+                </div>
               </div>
             </div>
           </div>
