@@ -31,6 +31,7 @@ import {
   Forgot,
   Catalog,
   Billing,
+  MerchantProducts,
 } from "Pages";
 
 import Scrolltotop from "components/UI/ScrollToTop";
@@ -84,6 +85,7 @@ const App = () => {
           <Route path="/userinfo" element={<UserInfo />} />
           <Route path="/order-history/:id" element={<UserHistory />} />
           <Route path="/seller/login" element={<MerchantSignIn />} />
+          <Route path="/seller/product" element={<MerchantProducts />} />
           <Route path="/seller/userinfo" element={<MerchantInfo />} />
           <Route path="/seller/home" element={<MerchantHome />} />
           <Route path="/seller/orders" element={<MerchantOrders />} />

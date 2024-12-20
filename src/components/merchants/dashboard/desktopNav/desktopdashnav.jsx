@@ -40,8 +40,9 @@ const DesktopDashNav = () => {
     { cats: "FoodStuffs", data: category?.foodstuff, id: "foodstuff" },
     { cats: "Fashion", data: category?.fashion, id: "fashion" },
     { cats: "Automobile", data: category?.automobile, id: "automobile" },
-    { cats: "Appliances", data: category?.appliance, id: "appliance" },
+    { cats: "Home Appliances", data: category?.appliance, id: "appliance" },
     { cats: "Baby Products", data: category?.baby, id: "baby" },
+    { cats: "Furniture", data: category?.furniture, id: "furniture" },
   ];
 
   const setOpen = (e) => {
@@ -85,6 +86,13 @@ const DesktopDashNav = () => {
           className={`hover:text-white hover:font-normal  ${pathname === `/seller/store/${key}` ? "font-medium text-gray-200" : "font-light text-gray-200"}
           `}>
           Add product
+        </Link>
+        <div className="bg-none h-2 w-2"></div>
+        <Link
+          to={`/seller/product`}
+          className={`hover:text-white hover:font-normal  ${pathname === `/seller/product` ? "font-medium text-gray-200" : "font-light text-gray-200"}
+          `}>
+          All products
         </Link>
         <div className="my-3">
           <div

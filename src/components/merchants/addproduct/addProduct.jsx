@@ -4,18 +4,19 @@ import "./addproduct.scss";
 import { toast } from "react-hot-toast";
 import { sendToStore } from "firebasedatas/addProduct";
 import { getExistingProduct } from "firebasedatas/getExisting";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { editItem } from "Redux/Actions/ActionCreators";
 import { useForm } from "react-hook-form";
 // import { Cloudinary } from "@cloudinary/url-gen";
 import CloudinaryUploadWidget from "cloudinary/cloudinaryWidget";
+import { useParams } from "react-router-dom";
 // import { AdvancedImage, placeholder, responsive } from "@cloudinary/react";
 
 const AddProduct = ({ merchant, uid }) => {
-  const { itemId } = useSelector((state) => state.items);
+  const { id } = useParams();
   const dispatch = useDispatch();
   const [isSubmit, setisSubmit] = useState(false);
-  const [selectedCat, setselectedCat] = useState();
+  // const [selectedCat, setselectedCat] = useState();
   const [publicId, setPublicId] = useState({ id: "", url: "" });
   const [images, setImages] = useState([]);
 
@@ -51,8 +52,8 @@ const AddProduct = ({ merchant, uid }) => {
 
   useEffect(() => {
     async function getData() {
-      if (itemId) {
-        await getExistingProduct(itemId)
+      if (id) {
+        await getExistingProduct(id)
           .then((res) => {
             dispatch(editItem(null));
             const { name, qty, description, category, price, image } = res;
@@ -70,11 +71,11 @@ const AddProduct = ({ merchant, uid }) => {
     }
 
     getData();
-  }, [itemId, dispatch, setValue]);
+  }, [id, dispatch, setValue]);
 
-  const selectedFn = (cat) => {
-    setselectedCat(cat);
-  };
+  // const selectedFn = (cat) => {
+  //   setselectedCat(cat);
+  // };
 
   const saveToDatabse = async (e) => {
     setisSubmit(true);
@@ -88,7 +89,7 @@ const AddProduct = ({ merchant, uid }) => {
       image: images,
       category: e.category,
       price: e.price,
-      id: itemId,
+      id: id,
     };
 
     await sendToStore(payload)
@@ -96,7 +97,7 @@ const AddProduct = ({ merchant, uid }) => {
         console.log(res);
         setisSubmit(false);
         toast.success("Saved successfully");
-        setselectedCat("");
+        // setselectedCat("");
         reset();
         setImages([]);
       })
@@ -162,6 +163,13 @@ const AddProduct = ({ merchant, uid }) => {
               className="block form__input input-field h-8 sm:h-11 px-2 border-zinc-700 rounded-md focus:outline-none text-zinc-700"
               {...register("category", { required: "Category is required" })}>
               <option value="">Select Category</option>
+              {categories?.map(({ cats }, index) => {
+                return (
+                  <option value={cats} key={index}>
+                    {cats}
+                  </option>
+                );
+              })}
             </select>
             {errors.category && <span className="font-small text-[#FF0000]">{errors.category.message}</span>}
           </div>

@@ -58,7 +58,11 @@ const ScrollWidget = ({ name, descriptions, image, id, price, merchantId, catego
     <>
       <div className=" pb-2 group w-[160px] flex flex-col space-y-2 overflow-hidden h-fit ld_widget bg-white rounded-md sm:rounded-lg">
         <div className="w-full h-full duration-300">
-          <div className="relative w-full h-[140px] img_sz overflow-hidden">
+          <div
+            className="relative w-full h-[140px] img_sz overflow-hidden cursor-pointer"
+            onClick={() => {
+              navigate(`/product/${id}`);
+            }}>
             <img className="h-full w-full object-cover min-[450px]:object-fill transform duration-200 group-hover:scale-105" src={image} alt="" />
           </div>
           <div className="flex w-full flex-col justify-between ">
@@ -74,7 +78,7 @@ const ScrollWidget = ({ name, descriptions, image, id, price, merchantId, catego
                 <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[150px] min-[450px]:w-[190px]">{descriptions}</span>
               </p>
             </div>
-            <div className="flex w-full justify-between items-center">
+            <div className="flex w-full flex-col md:flex-row items-left justify-between pl-2 gap-4 md:items-center">
               <div className="mt-2 min-[450px]:mt-5 px-2 text-[15px] font-medium sm:font-semibold text-zinc-700"> {formatter.format(price)}</div>
               <div className="flex  gap-4 mr-2">
                 <div

@@ -81,9 +81,9 @@ const GroupWidget = ({ heading, payload }) => {
             return (
               <div
                 className="groupWidget_album_item"
-                onClick={() => {
-                  navigate(`/product/${id}`);
-                }}
+                // onClick={() => {
+                //   navigate(`/product/${id}`);
+                // }}
                 key={idx + 1}>
                 <ScrollWidget name={name} image={image.values[0].mapValue.fields.url.stringValue} id={id} descriptions={description} price={price} />
               </div>
