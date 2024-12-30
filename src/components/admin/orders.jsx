@@ -43,9 +43,10 @@ const AdminOrders = () => {
                 let price = temp.reduce((acc, item) => Number(acc) + Number(item), 0);
                 return (
                   <div className="assignSingle" key={index} onClick={() => navigate(`/admin/orders/${item.id}`)}>
-                    <p>{item.id}</p>
+                    <p className="text-ellipsis whitespace-nowrap truncate">{item.id}</p>
                     <p>{item.customerName}</p>
                     <p className={item.status === "completed" ? "completed" : item.status === "failed" || item.status === "cancelled" ? "failed" : "ongoing"}>{item.status}</p>
+                    <p></p>
                     <p>{item.date}</p>
                     <p>{formatter.format(price)}</p>
                   </div>

@@ -96,6 +96,9 @@ const SingleOrder = () => {
                             <h2>
                               Quantity : <span>{item.count}</span>
                             </h2>
+                            <h2>
+                              Store Name : <span>{item.storeName}</span>
+                            </h2>
                           </div>
                         </div>
                       );
