@@ -113,13 +113,13 @@ const SingleOrder = () => {
                       <p>Sub-Total</p>
                       <h1>{formatter.format(amount)}</h1>
                     </div>
-                    <div>
+                    {/* <div>
                       <p>Delivery Fee</p>
                       <h1>{formatter.format(4000)}</h1>
-                    </div>
+                    </div> */}
                     <div>
                       <h2>Total Amount Paid</h2>
-                      <h1>{formatter.format(amount + 4000)}</h1>
+                      <h1>{formatter.format(amount)}</h1>
                     </div>
                     {/* <div>
           <h3>Vendor’s Pay</h3>

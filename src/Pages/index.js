@@ -28,6 +28,7 @@ import Forgot from "components/authentication/forgot/forgot";
 import Catalog from "components/catalog/catalog";
 import Billing from "components/payment-gateway/billing";
 import MerchantProducts from "components/merchants/allProducts";
+import AdminLogin from "components/admin/login";
 
 export {
   HomePage,
@@ -60,4 +61,5 @@ export {
   Catalog,
   Billing,
   MerchantProducts,
+  AdminLogin,
 };
