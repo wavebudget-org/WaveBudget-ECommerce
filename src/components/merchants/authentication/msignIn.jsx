@@ -44,7 +44,7 @@ const MerchantSignIn = () => {
                 .then((res) => {
                   if (res.key) {
                     reset();
-                    navigate(`/seller/store/${res.key}`);
+                    navigate(`/seller/store/`);
                     dispatch(GetUsersSuccess(uid));
                   } else {
                     navigate("/seller/not-activated");
@@ -129,7 +129,14 @@ const MerchantSignIn = () => {
               </div>
               {errors.password && <span className="font-small text-[#FF0000]">{errors.password.message}</span>}
             </div>
-
+            <span className="text-right  w-full">
+              <span
+                onClick={() => {
+                  navigate("/forgot");
+                }}>
+                Forgot Password?
+              </span>
+            </span>
             <button type="submit" className="bg-[#009999] text-white sm:py-3 py-2 rounded-md flex items-center w-full justify-center">
               {loading ? <Loader /> : <span>Log in</span>}
             </button>

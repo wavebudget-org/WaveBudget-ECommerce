@@ -96,7 +96,10 @@ const UserInfo = () => {
       </div>
       <div className="w-[95vw] text-zinc-700  mx-auto px-3 my-4 py-6 bg-white ">
         <p className="text-zinc-700 space-y-2">
-          For Complains or Enquiries you can mail us on <a href="mailto:topeakinfe@gmail.com">admin@wavebudget.com</a>
+          For Complains or Enquiries you can mail us on <a href="mailto:topeakinfe@gmail.com">admin@wavebudget.com</a> or message us on Whatsapp with this{" "}
+          <a href="https://wa.me/2348137960202" className="underline" target="_blank" rel="noreferrer">
+            link
+          </a>
         </p>
       </div>
       <MobileNav />

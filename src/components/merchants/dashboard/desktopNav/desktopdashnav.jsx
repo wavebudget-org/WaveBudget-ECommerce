@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./desktopdashnav.scss";
 import { AiOutlineMenu } from "react-icons/ai";
@@ -6,29 +6,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import { updateSingleItem } from "Redux/Actions/ActionCreators";
-import { getExistingDoc } from "firebasedatas/firebaseAuth";
 const DesktopDashNav = () => {
-  const { currentUser } = useSelector((state) => state.user);
   const { category } = useSelector((state) => state.items);
   const navigate = useNavigate();
   const [isOpen, setisOpen] = useState(false);
   const [ischeck, setischeck] = useState(false);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const [key, setKey] = useState();
-
-  useEffect(() => {
-    async function getUser() {
-      await getExistingDoc(currentUser)
-        .then((res) => {
-          setKey(res.key);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    getUser();
-  }, [currentUser]);
 
   const data = [
     { cats: "Health & Beauty", data: category?.health, id: "health" },
@@ -82,8 +66,8 @@ const DesktopDashNav = () => {
         </Link>
         <div className="bg-none h-2 w-2"></div>
         <Link
-          to={`/seller/store/${key}`}
-          className={`hover:text-white hover:font-normal  ${pathname === `/seller/store/${key}` ? "font-medium text-gray-200" : "font-light text-gray-200"}
+          to={`/seller/store/`}
+          className={`hover:text-white hover:font-normal  ${pathname === `/seller/store/` ? "font-medium text-gray-200" : "font-light text-gray-200"}
           `}>
           Add product
         </Link>

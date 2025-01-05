@@ -1,15 +1,10 @@
 import GroupHeaders from "components/groupHeadings/groupHeaders";
 import HidHeader from "components/Landing/minors/headers/hidHeader";
-import PaymentNotification from "components/paymentnotification/paymentNote";
-import { sendToStore } from "firebasedatas/addProduct";
 import { getExistingDoc } from "firebasedatas/firebaseAuth";
-import { saveHistory } from "firebasedatas/transactionHistory";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { formatter, location } from "Utils/helpers";
-import timeFormat from "Utils/timeFormat";
-import Paystack from "@paystack/inline-js";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -32,15 +27,6 @@ const Billing = () => {
   const [localGovernment, setLocalGovernment] = useState();
   const [city, setCity] = useState();
   const [phone, setPhone] = useState();
-  const [isNote, setisNote] = useState();
-  const [status, setStatus] = useState("");
-  const [transHistory, setTransHistory] = useState();
-  const dt = new Date();
-  const month = dt.toLocaleString("default", { month: "long" });
-  const day = dt.getDate();
-  const year = dt.getFullYear();
-  let hours, minutes, seconds, amPm;
-  //console.log(name, description, price.)
   useEffect(() => {
     if (!currentUser) return;
     async function getUser() {
@@ -63,9 +49,6 @@ const Billing = () => {
     getUser();
   }, [currentUser, setValue]);
 
-  //   const publicKey = "pk_test_e2f11bcc6e8ba94bb218a9b03bae850b9cb06092";
-  const publicKey = "pk_test_7fb90bd8aa7b5f58930828f02a247d2a950ad4d2";
-
   useEffect(() => {
     location?.filter((item) => {
       if (item.state === state) {
@@ -81,129 +64,81 @@ const Billing = () => {
       navigate("/signin");
       return;
     }
-    const popup = new Paystack();
-    popup.newTransaction({
-      key: publicKey,
-      email,
-      amount: overallPrice * 100,
-      onSuccess: async () => {
-        // if (payStatus) {
-        setTransHistory(cartItems);
+    navigate("/product/payment-gateway/");
+    const details = {
+      customerName: username,
+      customerEmail: email,
+      customerAddress: address,
+      customerPhone: phone,
+      customerCity: city,
+      customerState: state,
+      customerLga: localGovernment,
+    };
+    localStorage?.setItem("details", JSON.stringify(details));
+    // const popup = new Paystack();
+    // popup.newTransaction({
+    //   key: publicKey,
+    //   email,
+    //   amount: overallPrice * 100,
+    //   onSuccess: async () => {
+    //     // if (payStatus) {
+    //     setTransHistory(cartItems);
 
-        await saveHistory({
-          paymentStatus: "Success",
-          status: "Processing",
-          type: "checkout",
-          cart: cartItems,
-          userId: currentUser,
-          date: `${day} ${month} ${year}`,
-          time: `${timeFormat(hours, minutes, seconds, amPm)}`,
-          createdAt: dt.getTime(),
-          customerName: username,
-          customerEmail: email,
-          customerAddress: address,
-          customerPhone: phone,
-          customerCity: city,
-          customerState: state,
-          customerLga: localGovernment,
-        })
-          .then((res) => {
-            cartItems?.map(async (item) => {
-              const payload = {
-                name: item.name,
-                description: item.description,
-                storeName: item.storeName,
-                merchantId: item.merchantId,
-                qty: Number(item.qty) - item.count,
-                image: item.images,
-                category: item.category,
-                price: item.price,
-                id: item.productId,
-              };
-              await sendToStore(payload)
-                .then((res) => {})
-                .catch((err) => {
-                  console.log(err);
-                });
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        setStatus("Success");
-        setisNote(true);
-      },
-      onCancel: (response) => {
-        setStatus("Failed");
-      },
-      onLoad: (response) => {
-        console.log("onLoad: ", response);
-      },
-      onError: (error) => {
-        console.log("Error: ", error.message);
-      },
-    });
+    //     await saveHistory({
+    //       paymentStatus: "Success",
+    //       status: "Processing",
+    //       type: "checkout",
+    //       cart: cartItems,
+    //       userId: currentUser,
+    //       date: `${day} ${month} ${year}`,
+    //       time: `${timeFormat(hours, minutes, seconds, amPm)}`,
+    //       createdAt: dt.getTime(),
+    //       customerName: username,
+    //       customerEmail: email,
+    //       customerAddress: address,
+    //       customerPhone: phone,
+    //       customerCity: city,
+    //       customerState: state,
+    //       customerLga: localGovernment,
+    //     })
+    //       .then((res) => {
+    //         cartItems?.map(async (item) => {
+    //           const payload = {
+    //             name: item.name,
+    //             description: item.description,
+    //             storeName: item.storeName,
+    //             merchantId: item.merchantId,
+    //             qty: Number(item.qty) - item.count,
+    //             image: item.images,
+    //             category: item.category,
+    //             price: item.price,
+    //             id: item.productId,
+    //           };
+    //           await sendToStore(payload)
+    //             .then((res) => {})
+    //             .catch((err) => {
+    //               console.log(err);
+    //             });
+    //         });
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    //     setStatus("Success");
+    //     setisNote(true);
+    //   },
+    //   onCancel: (response) => {
+    //     setStatus("Failed");
+    //   },
+    //   onLoad: (response) => {
+    //     console.log("onLoad: ", response);
+    //   },
+    //   onError: (error) => {
+    //     console.log("Error: ", error.message);
+    //   },
+    // });
   };
 
-  // const componentProps = {
-  //   email,
-
-  //   amount: overallPrice * 100,
-
-  //   publicKey,
-
-  //   text: "Place Order",
-
-  //   onSuccess: async () => {
-  //     // if (payStatus) {
-  //     setTransHistory(cartItems);
-
-  //     await saveHistory({
-  //       paymentStatus: "Success",
-  //       status: "Processing",
-  //       type: "checkout",
-  //       cart: cartItems,
-  //       userId: currentUser,
-  //       date: `${day} ${month} ${year}`,
-  //       time: `${timeFormat(hours, minutes, seconds, amPm)}`,
-  //       createdAt: dt.getTime(),
-  //       customerName: username,
-  //       customerEmail: email,
-  //       customerAddress: address,
-  //       customerPhone: phone,
-  //       customerCity: city,
-  //       customerState: state,
-  //     })
-  //       .then((res) => {
-  //         cartItems?.map(async (item) => {
-  //           const payload = {
-  //             name: item.name,
-  //             description: item.description,
-  //             storeName: item.storeName,
-  //             merchantId: item.merchantId,
-  //             qty: Number(item.qty) - item.count,
-  //             image: item.images,
-  //             category: item.category,
-  //             price: item.price,
-  //             id: item.productId,
-  //           };
-  //           await sendToStore(payload)
-  //             .then((res) => {})
-  //             .catch((err) => {
-  //               console.log(err);
-  //             });
-  //         });
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //     setStatus("Success");
-  //     setisNote(true);
-  //   },
-  //   onCancel: (response) => {
-  //     setStatus("Failed");
-  //   },
-  // };
   return (
     <>
       <div className="w-full h-full mb-8">
@@ -352,7 +287,6 @@ const Billing = () => {
               {errors.email && <span className="font-small text-[#FF0000]">{errors.email.message}</span>}
             </div>
           </div>
-          <PaymentNotification isNote={isNote} setisNote={setisNote} transHistory={transHistory} payStatus={status} setStatus={setStatus} />
           <>
             <div className="min-[650px]:hidden fixed w-full border-t shadow-lg items-center bg-white inset-x-0 flex gap-3 justify-between p-4 rounded-t-xl bottom-0">
               <div className="text-[16px]">

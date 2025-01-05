@@ -9,11 +9,12 @@ import { editItem } from "Redux/Actions/ActionCreators";
 import { useForm } from "react-hook-form";
 // import { Cloudinary } from "@cloudinary/url-gen";
 import CloudinaryUploadWidget from "cloudinary/cloudinaryWidget";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import { AdvancedImage, placeholder, responsive } from "@cloudinary/react";
 
 const AddProduct = ({ merchant, uid }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isSubmit, setisSubmit] = useState(false);
   // const [selectedCat, setselectedCat] = useState();
@@ -88,7 +89,7 @@ const AddProduct = ({ merchant, uid }) => {
       qty: e.quantity,
       image: images,
       category: e.category,
-      price: e.price,
+      price: Number(e.price) > 150000 ? Number(e.price) + 0.08 * Number(e.price) : Number(e.price) + 0.06 * Number(e.price),
       id: id,
     };
 
@@ -97,6 +98,7 @@ const AddProduct = ({ merchant, uid }) => {
         console.log(res);
         setisSubmit(false);
         toast.success("Saved successfully");
+        navigate("/seller/product");
         // setselectedCat("");
         reset();
         setImages([]);

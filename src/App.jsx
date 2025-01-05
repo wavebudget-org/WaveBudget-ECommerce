@@ -74,7 +74,7 @@ const App = () => {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<UserCart />} />
           <Route path="/billing" element={<Billing />} />
-          <Route path="/product/payment-gateway/:id" element={<PaymentGateway />} />
+          <Route path="/product/payment-gateway/" element={<PaymentGateway />} />
           <Route path="/cart/initiate-payment/" element={<InitiatePay />} />
           <Route path="/detail" element={<DetailPage />} />
           <Route path="/catalog/" element={<Catalog />} />
@@ -82,6 +82,7 @@ const App = () => {
           <Route path="/seller/not-activated" element={<AwaitActivation />} />
           <Route path="/seller/register" element={<MerchantSignUp />} />
           <Route path="/seller/store/:id" element={<AddToStore />} />
+          <Route path="/seller/store/" element={<AddToStore />} />
           <Route path="/seller/edit-item" element={<EditStore />} />
           <Route path="/userinfo" element={<UserInfo />} />
           <Route path="/order-history/:id" element={<UserHistory />} />

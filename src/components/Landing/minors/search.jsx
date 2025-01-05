@@ -44,7 +44,7 @@ const Search = ({ setIsVisible }) => {
   function Rdelivery() {
     const url =
       "https://wa.me/2348137960202?text=" +
-      "Hi, I will like to buy  (insert product name)  on instalment, my location is (insert locatio), and i will like it to be deliverd to me on (insert date)";
+      "Hi, I will like to buy  (insert product name)  on instalment, my location is (insert location), and i will like it to be deliverd to me on (insert date)";
 
     window.open(url, "blank").focus();
   }
