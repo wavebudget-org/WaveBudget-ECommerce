@@ -60,3 +60,23 @@ export const sendToStore = async (data) => {
     return success;
   }
 };
+
+export const createBanner = async (data) => {
+  let success;
+  const docRef = doc(db, "banners", "123456");
+  const filterImage = data.filter((val) => val !== undefined);
+  const payload = {
+    images: filterImage,
+  };
+
+  setDoc(docRef, payload, { merge: true })
+    .then((docRef) => {
+      console.log("Entire Document has been updated successfully");
+      success = docRef;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  return success;
+};

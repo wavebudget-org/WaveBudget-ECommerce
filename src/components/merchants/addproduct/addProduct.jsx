@@ -21,14 +21,14 @@ const AddProduct = ({ merchant, uid }) => {
   const [publicId, setPublicId] = useState({ id: "", url: "" });
   const [images, setImages] = useState([]);
 
-  const [cloudName] = useState("temfad");
+  const [cloudName] = useState("ddkb4x2w4");
   // Replace with your own upload preset
   const [uploadPreset] = useState("wavebudget");
 
   const [uwConfig] = useState({
     cloudName,
     uploadPreset,
-    folder: "wavebudget",
+    folder: "ecommerce",
     maxImageFileSize: 2000000,
   });
 
@@ -40,8 +40,11 @@ const AddProduct = ({ merchant, uid }) => {
   // });
 
   useEffect(() => {
-    if (publicId.id !== "" && publicId.url !== "") images.push(publicId);
-  }, [publicId, images]);
+    if (publicId.id !== "" && publicId.url !== "") {
+      setImages((prevItems) => [...prevItems, publicId]);
+      setPublicId({ id: "", url: "" });
+    }
+  }, [publicId]);
 
   const {
     handleSubmit,
@@ -90,6 +93,7 @@ const AddProduct = ({ merchant, uid }) => {
       image: images,
       category: e.category,
       price: Number(e.price) > 150000 ? Number(e.price) + 0.08 * Number(e.price) : Number(e.price) + 0.06 * Number(e.price),
+      sellerPrice: e.price,
       id: id,
     };
 

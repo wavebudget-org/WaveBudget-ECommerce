@@ -31,6 +31,22 @@ export const getAll = async (data) => {
   return data;
 };
 
+export const getBanner = async () => {
+  const queryData = query(collection(db, "banners"));
+  let result;
+  await getDocs(queryData).then((res) => {
+    res.docs.forEach((doc) => {
+      //console.log(doc._document.data.value.mapValue)
+      const { fields } = doc._document.data.value.mapValue;
+      const { images } = fields;
+
+      result = images.arrayValue;
+    });
+  });
+
+  return result;
+};
+
 export const getCategory = async (cats) => {
   const queryDoc = query(collection(db, "productDetails"), where("category", "==", cats));
   let data = [];

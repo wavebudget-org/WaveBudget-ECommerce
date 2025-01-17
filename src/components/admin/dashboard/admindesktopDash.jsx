@@ -67,6 +67,15 @@ const AdminDesktopDashboard = () => {
             <span>Orders </span>
           </div>
         </div>
+        <div className="my-3">
+          <div
+            onClick={() => {
+              navigate("/admin/banner-upload");
+            }}
+            className={`${pathname === "/admin/banner-upload/" ? "font-normal" : "font-light"} text-gray-200 hover:text-white mb-3 hover:font-normal flex items-center space-x-1`}>
+            <span>Banner Upload </span>
+          </div>
+        </div>
       </div>
     </div>
   );

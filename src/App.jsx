@@ -33,6 +33,8 @@ import {
   Billing,
   MerchantProducts,
   AdminLogin,
+  AdminBanner,
+  AdminSingleOrder,
 } from "Pages";
 
 import Scrolltotop from "components/UI/ScrollToTop";
@@ -91,8 +93,10 @@ const App = () => {
           <Route path="/seller/userinfo" element={<MerchantInfo />} />
           <Route path="/seller/home" element={<MerchantHome />} />
           <Route path="/seller/orders" element={<MerchantOrders />} />
-          <Route path="/admin/orders/:id" element={<SingleOrder />} />
+          <Route path="/seller/orders/:id" element={<SingleOrder />} />
+          <Route path="/admin/orders/:id" element={<AdminSingleOrder />} />
           <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/banner-upload" element={<AdminBanner />} />
           <Route path="/admin/home" element={<AdminHome />} />
           <Route path="/admin/customer" element={<AdminCustomer />} />
           <Route path="/admin/orders" element={<AdminOrders />} />

@@ -29,6 +29,8 @@ import Catalog from "components/catalog/catalog";
 import Billing from "components/payment-gateway/billing";
 import MerchantProducts from "components/merchants/allProducts";
 import AdminLogin from "components/admin/login";
+import AdminBanner from "components/admin/banner/banner";
+import AdminSingleOrder from "components/admin/singleOrder";
 
 export {
   HomePage,
@@ -62,4 +64,6 @@ export {
   Billing,
   MerchantProducts,
   AdminLogin,
+  AdminBanner,
+  AdminSingleOrder,
 };

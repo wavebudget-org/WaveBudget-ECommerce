@@ -20,7 +20,7 @@ const AdminLogin = () => {
   const submit = (e) => {
     setLoading(true);
     setTimeout(() => {
-      if (e.email === "mail.wavebudget@gmail.com" && e.password === "password") navigate("/admin/home");
+      if (e.email === "mail.wavebudget@gmail.com" && e.password === "Wave5050@?") navigate("/admin/home");
       else toast.error("Invalid Credentials");
       setLoading(false);
     }, 2000);

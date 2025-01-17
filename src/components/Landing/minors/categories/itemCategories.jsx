@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsPhone, BsLaptop } from "react-icons/bs";
 import { MdOutlineRealEstateAgent, MdOutlineLocalPharmacy, MdOutlineFoodBank, MdOutlineEmojiFoodBeverage } from "react-icons/md";
 import { TbBabyCarriage } from "react-icons/tb";
@@ -10,24 +10,38 @@ import { useNavigate } from "react-router-dom";
 import "react-slideshow-image/dist/styles.css";
 import { Slide } from "react-slideshow-image";
 
-import { SliderText, SliderText1 } from "./slidertext";
+import { SliderText } from "./slidertext";
+import { getBanner } from "firebasedatas/getProducts";
 const ItemCategories = () => {
   const navigate = useNavigate();
 
-  const slides = [
-    {
-      image: "https://res.cloudinary.com/temfad/image/upload/v1733417404/WhatsApp_Image_2024-12-02_at_18.17.10_tdky1n.jpg",
-      title: <SliderText />,
-    },
-    {
-      image: "https://res.cloudinary.com/temfad/image/upload/v1733417404/WhatsApp_Image_2024-12-02_at_18.17.10_tdky1n.jpg",
-      title: <SliderText1 />,
-    },
-    {
-      image: "https://res.cloudinary.com/temfad/image/upload/v1733417404/WhatsApp_Image_2024-12-02_at_18.17.10_tdky1n.jpg",
-      title: <SliderText />,
-    },
-  ];
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      await getBanner()
+        .then((res) => {
+          const data = [];
+          res.values.forEach((doc) => {
+            const { fields } = doc.mapValue;
+            const item = {
+              id: fields.id.stringValue,
+              url: fields.url.stringValue,
+              title: <SliderText />,
+            };
+
+            data.push(item);
+          });
+          setImages(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    getData();
+  }, []);
+  console.log(images);
 
   return (
     <div className="max-[1000px]:hidden gap-6 grid grid-cols-6 bg-white rounded-md p-4">
@@ -177,9 +191,9 @@ const ItemCategories = () => {
 
       <div className="bg-[#009999] bg-opacity-25 overflow-hidden mix-blend-multiply w-full h-full col-span-5 rounded-md">
         <Slide>
-          {slides.map((slideImage, index) => (
-            <div key={index} className="w-full">
-              <img src={slideImage.image} alt="" className="w-full h-full object-cover" />
+          {images.map((slideImage, index) => (
+            <div key={index} className="w-full h-[500px]">
+              <img src={slideImage.url} alt="" className="w-full h-full object-cover object-top" />
               {/* <div style={{ ...divStyle, backgroundImage: `url(${slideImage.image})` }}></div> */}
             </div>
           ))}
