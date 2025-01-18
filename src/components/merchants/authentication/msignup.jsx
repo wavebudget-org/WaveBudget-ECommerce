@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 const MerchantSignUp = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [cac, setCAC] = useState();
+  // const [cac, setCAC] = useState();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -25,17 +25,17 @@ const MerchantSignUp = () => {
     reset,
   } = useForm();
 
-  const handleCAC = (e) => {
-    if (e.target.files[0]) {
-      const file = e.target.files[0];
-      if (file.size > 3000000) {
-        toast.error("Image size should not exceeds 3MB");
-        return;
-      }
+  // const handleCAC = (e) => {
+  //   if (e.target.files[0]) {
+  //     const file = e.target.files[0];
+  //     if (file.size > 3000000) {
+  //       toast.error("Image size should not exceeds 3MB");
+  //       return;
+  //     }
 
-      setCAC(file);
-    }
-  };
+  //     setCAC(file);
+  //   }
+  // };
   const styles = { input: "block form__input input-field border border-black  rounded-md focus:outline-none w-full h-10 sm:h-11 px-4" };
 
   const submit = async (e) => {
@@ -50,7 +50,6 @@ const MerchantSignUp = () => {
       acctnumber: e.accountNumber,
       bankname: e.bankName,
       businessType: e.businessType,
-      cacImage: cac,
       businessDescription: e.businessDescription,
       type: "Merchant",
     };
@@ -172,12 +171,6 @@ const MerchantSignUp = () => {
                 </label>
                 <input className={styles.input} type="text" placeholder="Business description (Optional)" name="name" {...register("businessDescription")} />
               </div>
-              <div className="form-group space-y-1 w-full">
-                <label className="block font-medium text-zinc-700" htmlFor="name">
-                  CAC Registration (Optional)
-                </label>
-                <input accept="image/jpeg, image/png, image/jpg" type="file" placeholder="Business description (Optional)" name="name" onChange={(e) => handleCAC(e)} />
-              </div>
 
               <div className="form-group space-y-1 w-full">
                 <div className="form-group font-medium space-y-1 w-full">Bank Account Details</div>
@@ -246,3 +239,10 @@ const MerchantSignUp = () => {
 };
 
 export default MerchantSignUp;
+
+//  <div className="form-group space-y-1 w-full">
+//    <label className="block font-medium text-zinc-700" htmlFor="name">
+//      CAC Registration (Optional)
+//    </label>
+//    <input accept="image/jpeg, image/png, image/jpg" type="file" placeholder="Business description (Optional)" name="name" onChange={(e) => handleCAC(e)} />
+//  </div>;

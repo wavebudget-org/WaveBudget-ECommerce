@@ -6,45 +6,7 @@ import { setDoc, doc } from "firebase/firestore";
 export const saveData = async (id, payload) => {
   const userRef = doc(db, "userinformation", id);
 
-  console.log(payload);
-  if (payload.cacImage) {
-    // let result;
-    // const imgRef = ref(storage, `images/${payload.cacImage + v4()}`);
-
-    // await uploadBytes(imgRef, payload.cacImage)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
-    // await getDownloadURL(imgRef)
-    //   .then((res) => {
-    //     console.log(res);
-    //     result = res;
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
-    return setDoc(userRef, {
-      email: payload.email,
-      userId: id,
-      phoneNumber: payload.phoneNumber,
-      acctname: payload.acctname,
-      acctnumber: payload.acctnumber,
-      bankname: payload.bankname,
-      store: payload.store,
-      address: payload.address,
-      businessType: payload.businessType,
-      cac: "",
-      businessDescription: payload.businessDescription,
-      type: "Merchant",
-    });
-  } else {
-    return setDoc(userRef, payload);
-  }
+  return setDoc(userRef, payload);
 };
 
 export const saveMerchantID = async (id, payload) => {
