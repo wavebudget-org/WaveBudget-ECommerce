@@ -11,7 +11,7 @@ export const getAll = async (data) => {
     res.docs.forEach((doc) => {
       //console.log(doc._document.data.value.mapValue)
       const { fields } = doc._document.data.value.mapValue;
-      const { category, description, createdAt, name, price, qty, image, storeName, merchantId } = fields;
+      const { category, description, createdAt, name, price, qty, image, storeName, merchantId, sellerPrice } = fields;
 
       data.push({
         id: doc.id,
@@ -24,6 +24,7 @@ export const getAll = async (data) => {
         image: image.arrayValue,
         storeName: storeName.stringValue,
         merchantId: merchantId.stringValue,
+        sellerPrice: sellerPrice?.stringValue,
       });
     });
   });

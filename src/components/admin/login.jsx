@@ -6,9 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Loader from "components/UI/Loader";
+import { useDispatch } from "react-redux";
+import { GetUsersSuccess } from "Redux/Actions/ActionCreators";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const {
@@ -20,8 +23,10 @@ const AdminLogin = () => {
   const submit = (e) => {
     setLoading(true);
     setTimeout(() => {
-      if (e.email === "mail.wavebudget@gmail.com" && e.password === "Wave5050@?") navigate("/admin/home");
-      else toast.error("Invalid Credentials");
+      if (e.email === "mail.wavebudget@gmail.com" && e.password === "Wave5050@?") {
+        navigate("/admin/home");
+        dispatch(GetUsersSuccess("Admin"));
+      } else toast.error("Invalid Credentials");
       setLoading(false);
     }, 2000);
   };

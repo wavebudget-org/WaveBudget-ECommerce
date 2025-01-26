@@ -4,9 +4,10 @@ import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 
 export const RequireAuth = ({ children }) => {
-  const { token } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
+  console.log(user);
   const location = useLocation();
-  if (token) {
+  if (user.currentUser) {
     return <> {children} </>;
   } else {
     toast.error("Access Denied, login required");

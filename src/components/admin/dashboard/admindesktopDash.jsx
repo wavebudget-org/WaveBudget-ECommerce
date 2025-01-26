@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import "./admindesktopDash.scss";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "Redux/Actions/ActionCreators";
 
 const AdminDesktopDashboard = () => {
   const navigate = useNavigate();
   const [isOpen, setisOpen] = useState(false);
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
 
   const setOpen = (e) => {
     e.stopPropagation();
@@ -74,6 +77,16 @@ const AdminDesktopDashboard = () => {
             }}
             className={`${pathname === "/admin/banner-upload/" ? "font-normal" : "font-light"} text-gray-200 hover:text-white mb-3 hover:font-normal flex items-center space-x-1`}>
             <span>Banner Upload </span>
+          </div>
+        </div>
+        <div className="my-3">
+          <div
+            onClick={() => {
+              dispatch(logout());
+              navigate("/admin/login");
+            }}
+            className={`text-gray-200 hover:text-white mb-3 hover:font-normal flex items-center space-x-1`}>
+            <span>Logout </span>
           </div>
         </div>
       </div>

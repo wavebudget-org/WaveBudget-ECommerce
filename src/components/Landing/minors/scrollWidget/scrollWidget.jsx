@@ -17,6 +17,7 @@ const ScrollWidget = ({ name, descriptions, image, id, price, merchantId, catego
   const { currentUser } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
+  const installment = parseInt(price * 1.12);
 
   const addToCart = () => {
     // if (!currentUser) {
@@ -40,7 +41,7 @@ const ScrollWidget = ({ name, descriptions, image, id, price, merchantId, catego
       description: descriptions,
       storeName,
       userId: currentUser,
-      curPrice: price,
+      curPrice: installment * 0.95,
       qty,
       category,
       merchantId,
@@ -79,7 +80,7 @@ const ScrollWidget = ({ name, descriptions, image, id, price, merchantId, catego
               </p>
             </div>
             <div className="flex w-full flex-col md:flex-row items-left justify-between pl-2 gap-4 md:items-center">
-              <div className="mt-2 min-[450px]:mt-5 px-2 text-[15px] font-medium sm:font-semibold text-zinc-700"> {formatter.format(price)}</div>
+              <div className="mt-2 min-[450px]:mt-5 px-2 text-[15px] font-medium sm:font-semibold text-zinc-700"> {formatter.format(installment * 0.95)}</div>
               <div className="flex  gap-4 mr-2">
                 <div
                   onClick={(e) => {

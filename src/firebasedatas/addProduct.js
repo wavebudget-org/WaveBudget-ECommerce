@@ -18,6 +18,7 @@ export const sendToStore = async (data) => {
       image: filterImage,
       price: data.price,
       createdAt: new Date().getTime(),
+      sellerPrice: data.sellerPrice,
     };
 
     setDoc(docRef, payload, { merge: true })
@@ -48,6 +49,7 @@ export const sendToStore = async (data) => {
       image: myImages,
       price: data.price,
       createdAt: new Date().getTime(),
+      sellerPrice: data.sellerPrice,
     })
       .then((res) => {
         console.log(res);

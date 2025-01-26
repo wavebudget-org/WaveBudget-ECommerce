@@ -193,7 +193,7 @@ const ItemCategories = () => {
         <Slide>
           {images.map((slideImage, index) => (
             <div key={index} className="w-full h-[500px]">
-              <img src={slideImage.url} alt="" className="w-full h-full object-cover object-top" />
+              <img src={slideImage.url} alt="Product" className="w-full h-full " />
               {/* <div style={{ ...divStyle, backgroundImage: `url(${slideImage.image})` }}></div> */}
             </div>
           ))}

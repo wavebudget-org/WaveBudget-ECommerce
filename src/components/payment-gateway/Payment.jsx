@@ -85,7 +85,8 @@ const PaymentGateway = () => {
               qty: Number(item.qty) - item.count,
               image: item.images,
               category: item.category,
-              price: item.price,
+              sellerPrice: item.price,
+              price: item.curPrice,
               id: item.productId,
             };
             await sendToStore(payload)
@@ -143,7 +144,7 @@ const PaymentGateway = () => {
           <button onClick={handleShareReciept} className="text-white py-2 bg-[#009999] rounded-2xl flex justify-center items-center w-full">
             Share payment receipt
           </button>
-          <PaystackButton type="submit" {...componentProps} className="text-white py-2 bg-[#009999] rounded-2xl flex justify-center items-center w-full" />
+          <PaystackButton type="submit" {...componentProps} className="text-white py-2 bg-[#009999] rounded-2xl hidden justify-center items-center w-full" />
         </div>
         <div className="flex flex-col justify-start space-y-[5%] text-zinc-800">
           <h1 className="text-2xl font-bold text-[#0b8e8e]">Bank Details</h1>
