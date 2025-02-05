@@ -150,7 +150,7 @@ const ProductDetail = () => {
       name +
       "on instalment, my location is (insert location), and i will like it to be deliverd to me on (insert date)";
     // "Product link:  " +
-    // `https://wave-budget-ecommerce.netlify.app/${id}` +
+    // `https://wavemart.wavebudget.com/${id}` +
     // "%0a"
     window.open(url, "blank").focus();
   };
@@ -280,7 +280,7 @@ const ProductDetail = () => {
         count={count}
         store={storeName}
         curPrice={parseFloat(curPrice)}
-        plink={`https://wave-budget-ecommerce.netlify.app/${id}`}
+        plink={`https://wavemart.wavebudget.com/${id}`}
       /> */}
     </div>
   );

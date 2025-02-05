@@ -70,7 +70,7 @@ const MerchantProducts = () => {
                       <p>{item.name}</p>
                       <p>{item.category}</p>
                       <p>{item.qty}</p>
-                      <p>{formatter.format(item.price)}</p>
+                      <p>{formatter.format(item.sellerPrice)}</p>
                     </div>
                   );
                 }

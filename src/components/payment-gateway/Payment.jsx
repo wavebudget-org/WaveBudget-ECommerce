@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import timeFormat from "Utils/timeFormat";
 import { getExistingDoc } from "firebasedatas/firebaseAuth";
 import PaymentNotification from "components/paymentnotification/paymentNote";
@@ -8,9 +8,11 @@ import { saveHistory } from "firebasedatas/transactionHistory";
 import { formatter } from "Utils/helpers";
 import { PaystackButton } from "react-paystack";
 import { sendToStore } from "firebasedatas/addProduct";
+import { resetCart } from "Redux/Actions/ActionCreators";
 const PaymentGateway = () => {
   const { cartItems, overallPrice } = useSelector((state) => state.cart);
   const [email, setEmail] = useState();
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [transHistory, setTransHistory] = useState();
@@ -38,6 +40,7 @@ const PaymentGateway = () => {
   }, [currentUser]);
 
   const handleShareReciept = () => {
+    dispatch(resetCart());
     const url = "https://wa.me/2348137960202?text=";
     window.open(url, "blank").focus();
   };
@@ -91,6 +94,7 @@ const PaymentGateway = () => {
             };
             await sendToStore(payload)
               .then((res) => {
+                dispatch(resetCart());
                 setStatus("Success");
                 setisNote(true);
                 navigate("/");

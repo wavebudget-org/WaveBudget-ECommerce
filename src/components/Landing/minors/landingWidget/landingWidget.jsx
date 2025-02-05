@@ -85,7 +85,7 @@ const LandingWidget = ({ name, descriptions, image, id, price, merchantId, categ
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-                    setLink(`https://wave-budget-ecommerce.netlify.app/product/${id}`);
+                    setLink(`https://wavemart.wavebudget.com/product/${id}`);
                     setisShare(!isShare);
                   }}
                   className="bg-black text-white p-1 rounded-full cursor-pointer">
