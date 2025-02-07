@@ -92,7 +92,7 @@ const AddProduct = ({ merchant, uid }) => {
       qty: e.quantity,
       image: images,
       category: e.category,
-      price: Number(e.price) > 150000 ? Number(e.price) + 0.08 * Number(e.price) : Number(e.price) + 0.06 * Number(e.price),
+      price: Number(e.price) + 0.1 * Number(e.price),
       sellerPrice: e.price,
       id: id,
     };

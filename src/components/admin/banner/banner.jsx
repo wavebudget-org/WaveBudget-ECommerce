@@ -57,7 +57,7 @@ const AdminBanner = () => {
     await createBanner(images)
       .then((res) => {
         toast.success("Saved successfully");
-        setImages([]);
+        // setImages([]);
         setisSubmit(false);
       })
       .catch((err) => {

@@ -53,7 +53,7 @@ const MerchantProducts = () => {
         <div className="assignContainer">
           <div className="assignWrapper">
             <div className="assignHeader">
-              <p>ID</p>
+              {/* <p>ID</p> */}
               <p>Product Name</p>
               <p>Category</p>
               <p>Quantity</p>
@@ -66,7 +66,7 @@ const MerchantProducts = () => {
                 if (item.merchantId === merchant.userId) {
                   return (
                     <div className="assignSingle" key={index} onClick={() => navigate(`/seller/store/${item.id}`)}>
-                      <p>{item.id}</p>
+                      {/* <p>{item.id}</p> */}
                       <p>{item.name}</p>
                       <p>{item.category}</p>
                       <p>{item.qty}</p>

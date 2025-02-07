@@ -9,7 +9,7 @@ const ProductWidget = ({ items }) => {
       <p className=" top_heading">Just for You</p>
 
       <div className="mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5">
-        {items?.map(({ name, description, id, image, sellerPrice, merchantId, category, qty, storeName }, idx) => {
+        {items?.map(({ name, description, id, image, price, merchantId, category, qty, storeName }, idx) => {
           return (
             // <div
             //   key={idx}
@@ -22,7 +22,7 @@ const ProductWidget = ({ items }) => {
               image={image.values[0].mapValue.fields.url.stringValue}
               id={id}
               descriptions={description}
-              price={parseInt(sellerPrice)}
+              price={parseInt(price)}
               images={image}
               merchantId={merchantId}
               category={category}

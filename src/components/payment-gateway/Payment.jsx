@@ -39,10 +39,55 @@ const PaymentGateway = () => {
     getUser();
   }, [currentUser]);
 
-  const handleShareReciept = () => {
-    dispatch(resetCart());
-    const url = "https://wa.me/2348137960202?text=";
-    window.open(url, "blank").focus();
+  const handleShareReciept = async () => {
+    setTransHistory(cartItems);
+    const details = JSON.parse(localStorage.getItem("details"));
+
+    await saveHistory({
+      paymentStatus: "Success",
+      status: "Processing",
+      type: "checkout",
+      cart: cartItems,
+      userId: currentUser,
+      date: `${day} ${month} ${year}`,
+      time: `${timeFormat(hours, minutes, seconds, amPm)}`,
+      createdAt: dt.getTime(),
+      customerName: details.customerName,
+      customerEmail: details.customerEmail,
+      customerAddress: details.customerAddress,
+      customerPhone: details.customerPhone,
+      customerCity: details.customerCity,
+      customerState: details.customerState,
+      customerLga: details.customerLga,
+    })
+      .then((res) => {
+        cartItems?.map(async (item) => {
+          const payload = {
+            name: item.name,
+            description: item.description,
+            storeName: item.storeName,
+            merchantId: item.merchantId,
+            qty: Number(item.qty) - item.count,
+            image: item.images,
+            category: item.category,
+            sellerPrice: item.price,
+            price: item.curPrice,
+            id: item.productId,
+          };
+          await sendToStore(payload)
+            .then((res) => {
+              dispatch(resetCart());
+              const url = "https://wa.me/2348137960202?text=";
+              window.open(url, "blank").focus();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const publicKey = "pk_test_7fb90bd8aa7b5f58930828f02a247d2a950ad4d2";
@@ -145,9 +190,11 @@ const PaymentGateway = () => {
               <b>{formatter.format(overallPrice) || formatter.format(0)}</b>
             </span>
           </div>
+          <p>Click button after successfully completing the transfer</p>
           <button onClick={handleShareReciept} className="text-white py-2 bg-[#009999] rounded-2xl flex justify-center items-center w-full">
             Share payment receipt
           </button>
+          <button className="text-white py-2 bg-[#009999] rounded-2xl flex justify-center items-center w-full cursor-not-allowed">Pay with Paystack coming soon</button>
           <PaystackButton type="submit" {...componentProps} className="text-white py-2 bg-[#009999] rounded-2xl hidden justify-center items-center w-full" />
         </div>
         <div className="flex flex-col justify-start space-y-[5%] text-zinc-800">

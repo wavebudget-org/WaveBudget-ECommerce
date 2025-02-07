@@ -57,7 +57,7 @@ export const getCategory = async (cats) => {
     else {
       res.docs.forEach((doc) => {
         const { fields } = doc._document.data.value.mapValue;
-        const { category, description, createdAt, name, price, image, qty, storeName, merchantId } = fields;
+        const { category, description, createdAt, name, price, image, qty, storeName, merchantId, sellerPrice } = fields;
         data.push({
           id: doc.id,
           category: category.stringValue,
@@ -65,6 +65,7 @@ export const getCategory = async (cats) => {
           createdAt: createdAt.integerValue,
           name: name.stringValue,
           price: price.integerValue === undefined ? price.stringValue : price.integerValue,
+          sellerPrice: sellerPrice.integerValue === undefined ? sellerPrice.stringValue : sellerPrice.integerValue,
           qty: qty.integerValue === undefined ? qty.stringValue : qty.integerValuee,
           image: image.arrayValue,
           storeName: storeName.stringValue,

@@ -43,20 +43,19 @@ const ProductDetail = () => {
     async function getProduct() {
       await getExistingProduct(id)
         .then((res) => {
-          const { name, description, qty, storeName, image, merchantId, category, sellerPrice } = res;
+          const { name, description, qty, storeName, image, merchantId, category, sellerPrice, price } = res;
           const installment = parseInt(sellerPrice * 1.12);
-          console.log(sellerPrice);
           setname(name);
           setCategory(category);
           setdescription(description);
           setQty(qty);
           setStorename(storeName);
           setImages(image);
-          setprice(sellerPrice);
+          setprice(price);
           setMerchantId(merchantId);
           setbnpl(installment);
           setcurBNPL(installment);
-          setcurPrice(parseInt(installment * 0.95));
+          setcurPrice(parseInt(price));
         })
         .catch((err) => {
           console.log(err);
@@ -67,7 +66,7 @@ const ProductDetail = () => {
 
   const incItem = () => {
     setCount(count + 1);
-    setcurPrice(curPrice + parseInt());
+    setcurPrice(curPrice + parseInt(price));
     setcurBNPL(curBNPL + bnpl);
   };
   const decItem = () => {
@@ -77,13 +76,15 @@ const ProductDetail = () => {
       setCount(1);
     }
     if (curPrice === parseInt(price)) {
-      setcurPrice(price * 1.12 * 0.95);
+      setcurPrice(price);
       setcurBNPL(price * 1.12);
     } else {
       setcurPrice(curPrice - parseInt(price));
       setcurBNPL(curBNPL - bnpl);
     }
   };
+
+  useEffect(() => {}, [count, curPrice]);
   const addToCart = () => {
     // if (!currentUser) {
     //   toast.error("You must be logged in to add to cart");
@@ -194,14 +195,14 @@ const ProductDetail = () => {
             </span>
           </div>
 
-          <div className="capitalize border-b p-2 w-full grid grid-cols-2 gap-[3.5rem] items-center">
+          {/* <div className="capitalize border-b p-2 w-full grid grid-cols-2 gap-[3.5rem] items-center">
             <span> BNPL price:</span>
             <span>
               <b>{formatter.format(bnpl) || formatter.format(0)}</b>
             </span>
-          </div>
+          </div> */}
           <div className="capitalize border-b p-2 w-full grid grid-cols-2 gap-[3.5rem] items-center">
-            <span>Outright price:</span>
+            <span>Price:</span>
             <span>
               <b>{formatter.format(curPrice) || formatter.format(0)}</b>
             </span>
@@ -226,13 +227,7 @@ const ProductDetail = () => {
 
         <div className="flex flex-col justify-center items-center space-y-[3%] p-2 min-[450px]:p-4">
           <div className=" flex w-[90%] sm:w-full lg:w-[90%] justify-between items-center p-2">
-            <span>5 month installment plan:</span>{" "}
-            <span>
-              <b>{formatter.format(curBNPL) || formatter.format(0)}</b>
-            </span>
-          </div>
-          <div className=" flex w-[90%] sm:w-full lg:w-[90%] justify-between items-center p-2">
-            <span>Pay in full ( discounted price):</span>
+            <span>Pay :</span>
             <span>
               <b>{formatter.format(curPrice) || formatter.format(0)}</b>
             </span>

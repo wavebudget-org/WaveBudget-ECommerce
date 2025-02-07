@@ -1,26 +1,22 @@
 import React from "react";
 import box from "../../../assets/images/box.png";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { editItem } from "Redux/Actions/ActionCreators";
-import { updateSingleItem } from "Redux/Actions/ActionCreators";
 import { deleteProduct } from "firebasedatas/deleteProduct";
 import { formatter } from "Utils/helpers";
+import toast from "react-hot-toast";
 
 const EditCategories = ({ cats, data, uid }) => {
-  const { singleCategory } = useSelector((state) => state.items);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const editCat = (id) => {
-    navigate(`/seller/store/${uid.key}`);
-    dispatch(editItem(id));
+    navigate(`/seller/store/${id}`);
+    // dispatch(editItem(id));
   };
   // console.log(id);
   const deleteItem = async (id) => {
     await deleteProduct(id)
       .then((res) => {
-        dispatch(updateSingleItem(singleCategory?.filter((val) => val.id !== id)));
+        toast.success("Deleted Successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -63,7 +59,7 @@ const EditCategories = ({ cats, data, uid }) => {
                         <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[150px] min-[450px]:w-[200px]">{item.description}</span>
                       </p>
                     </div>
-                    <div className="mt-2 min-[450px]:mt-5 px-2 text-[15px] font-medium sm:font-semibold text-zinc-700"> {formatter.format(item.price)}</div>
+                    <div className="mt-2 min-[450px]:mt-5 px-2 text-[15px] font-medium sm:font-semibold text-zinc-700"> {formatter.format(item.sellerPrice)}</div>
                   </div>
 
                   <div className="flex justify-between text-white px-2 items-center text-sm sm:text-[16px]">

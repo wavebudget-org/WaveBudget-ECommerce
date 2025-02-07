@@ -19,29 +19,27 @@ const ItemCategories = () => {
 
   useEffect(() => {
     async function getData() {
-      await getBanner()
-        .then((res) => {
-          const data = [];
-          res.values.forEach((doc) => {
-            const { fields } = doc.mapValue;
-            const item = {
-              id: fields.id.stringValue,
-              url: fields.url.stringValue,
-              title: <SliderText />,
-            };
+      try {
+        const res = await getBanner();
+        if (!res?.values) return; // Handle unexpected response structure
 
-            data.push(item);
-          });
-          setImages(data);
-        })
-        .catch((err) => {
-          console.log(err);
+        const data = res.values.map((doc) => {
+          const { fields } = doc.mapValue;
+          return {
+            id: fields.id.stringValue,
+            url: fields.url.stringValue,
+            title: <SliderText />,
+          };
         });
+
+        setImages(data);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
     }
 
     getData();
   }, []);
-  console.log(images);
 
   return (
     <div className="max-[1000px]:hidden gap-6 grid grid-cols-6 bg-white rounded-md p-4">
@@ -190,7 +188,7 @@ const ItemCategories = () => {
       </div>
 
       <div className="bg-[#009999] bg-opacity-25 overflow-hidden mix-blend-multiply w-full h-full col-span-5 rounded-md">
-        <Slide>
+        <Slide key={images.length}>
           {images.map((slideImage, index) => (
             <div key={index} className="w-full h-[500px]">
               <img src={slideImage.url} alt="Product" className="w-full h-full " />
