@@ -15,6 +15,7 @@ const AdminOrders = () => {
     async function getItems() {
       await getOrders()
         .then((res) => {
+          console.log(res);
           setOrders(res);
         })
         .catch((er) => {

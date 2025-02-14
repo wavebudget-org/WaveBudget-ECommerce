@@ -10,7 +10,6 @@ export const getCustomers = async (customers) => {
     console.log(res.docs);
     res.docs.forEach((doc) => {
       const { fields } = doc._document.data.value.mapValue;
-      console.log(fields);
       customers.push(fields);
     });
   });
@@ -23,7 +22,6 @@ export const getMerchant = async (sellers) => {
 
   //console.log("from env file", process.env.VUE_APP_MESSAGING_ID)
   await getDocs(queryMerchant).then((res) => {
-    console.log(res.docs);
     res.docs.forEach((doc) => {
       const { fields } = doc._document.data.value.mapValue;
       sellers.push(fields);

@@ -60,10 +60,10 @@ const AddProduct = ({ merchant, uid }) => {
         await getExistingProduct(id)
           .then((res) => {
             dispatch(editItem(null));
-            const { name, qty, description, category, price, image } = res;
+            const { name, qty, description, category, sellerPrice, image } = res;
             setValue("name", name);
             setValue("description", description);
-            setValue("price", price);
+            setValue("price", sellerPrice);
             setValue("quantity", qty);
             setValue("category", category);
             setImages(image);

@@ -80,7 +80,7 @@ const AdminCustomer = () => {
             </div>
           </div>
 
-          {newCustomers.length === 0 && (
+          {newCustomers.length === 0 && myCustomers.length === 0 && (
             <div className="w-full flex items-center justify-center">
               <img src={loading} alt="" />
             </div>
@@ -107,7 +107,7 @@ const AdminCustomer = () => {
                 </div>
                 <div className="flex space-x-2 items-center justify-start max-[600px]:col-span-2">
                   <span className="truncate w-[98vw] text-zinc-700 sm:pr-[10%] flex flex-wrap overflow-hidden">
-                    <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[190px] min-[450px]:w-[190px]">{phone.stringValue}</span>
+                    <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[190px] min-[450px]:w-[190px]">{phone?.stringValue}</span>
                   </span>
                 </div>
                 <div className="max-[600px]:hidden">{userId.stringValue}</div>
